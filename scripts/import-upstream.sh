@@ -14,3 +14,7 @@ mv "$tmp"/cursor-team-kit/skills/* "$tmp"/pstack/skills/
 git -C "$here" ls-files -z -- . ':!scripts' | (cd "$here" && xargs -0 rm -f)
 cp -R "$tmp"/pstack/. "$here"/
 git -C "$plugins" rev-parse "$ref" > "$here/UPSTREAM"
+# Stage only what the import touched. The upstream branch has no .gitignore, so `git add -A` would sweep in .env, .verify/, and node_modules/.
+git -C "$here" add -u -- . ':!scripts'
+(cd "$tmp"/pstack && find . -type f -print0) | (cd "$here" && xargs -0 git add --)
+git -C "$here" add UPSTREAM
