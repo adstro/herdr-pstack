@@ -73,6 +73,13 @@ hc wait <name>
 
 Drop `--rm` when you still need `hc read <name>` afterward. A server you need running uses `hc run --bg --name <name> <command>`, then `hc wait <name> --output <ready text>`.
 
+## Long-lived terminals
+
+A child ends when its parent ends. Two kinds of terminal should not:
+
+- A coordinator that owns a long program of work. Start it with `--outlive-parent`, and add `hc keep <name>` so a lost program comes back as a shell you can restart it from. Add `--on <machine>` to run it on another computer.
+- A bot that a UI, cron job, or other event wakes. Start it with `--no-parent`, so it reports to no chat. The trigger wakes it with `hc send <name> "<payload>"`, run as an argument list, never a shell string. herdr-core is local and trusts the OS user, so no sender key exists. Do not `hc keep` a bot that receives untrusted text, since a recovered shell would run that text.
+
 ## Asking the user
 
 Ask with the host's structured question tool, such as `AskUserQuestion` in Claude Code. With none, ask in plain text and end the turn. A delegate asks its parent with `hc send` instead.
@@ -86,6 +93,8 @@ pstack picks a model per role. The user's choices live in `~/.config/herdr-core/
 | `<model> <effort>`, such as `opus xhigh` | `claude --model <model> --effort <effort>`. `<model>` is a Claude Code model alias (`opus`, `sonnet`, `haiku`, `fable`). |
 | `inherit-parent` or `auto` | The host's own command with no model flag, such as `claude`. The role runs on the parent's model. |
 | Anything else | A full command, used as written, such as `grok --always-approve -m grok-4.7 --effort xhigh`. |
+
+A Codex value always carries `--no-daemon`, such as `codex --no-daemon -m gpt-6.1-sol -c model_reasoning_effort=xhigh`. Without it, Codex runs its commands outside hc.
 
 A panel role, such as arena runners, holds a comma-separated list. One subagent runs per entry, so the list length sets the count.
 
