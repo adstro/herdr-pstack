@@ -75,11 +75,13 @@ If your own first message arrived as `<hc from="..." reach="hc send t3 ...">`, y
 Run a build, test suite, install, or CI watch in its own terminal so you stay reachable:
 
 ```sh
-hc run --bg --rm --no-notify --name <name> -- <command>
+hc run --bg --no-notify --name <name> -- <command>
 hc wait <name>
+hc read --lines 40 <name>
+hc rm <name>
 ```
 
-Drop `--rm` when you still need `hc read <name>` afterward. A server you need running uses `hc run --bg --name <name> <command>`, then `hc wait <name> --output <ready text>`.
+Remove the terminal yourself after `hc wait` and `hc read`. With `--rm`, a command that ends before `hc wait` starts is already gone, and the wait returns `not_found` with no exit code or output. A server you need running uses `hc run --bg --name <name> <command>`, then `hc wait <name> --output <ready text>`.
 
 ## Long-lived terminals
 
