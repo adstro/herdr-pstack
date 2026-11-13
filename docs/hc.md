@@ -1,0 +1,106 @@
+# Running pstack on herdr
+
+pstack runs inside an agent CLI (the host, such as Claude Code or Codex) in a terminal that herdr-core manages. `hc` drives herdr-core, and `$HC_TERMINAL_ID` is your address. Keep the host's own tools for files, edits, todos, and questions. Use `hc` for every subagent, slow command, and other machine, even when the host has its own subagent tool, so each helper stays watchable, steerable, and on the model its role names. `hc --help` and the `hc` skill have the exact flags.
+
+`<pstack>` below means the folder that holds this file's `docs/` and `skills/`.
+
+## Spawn a subagent
+
+Every subagent is an interactive agent in its own `hc` terminal, started in the background with its brief as the launch argument so the brief cannot be dropped:
+
+```sh
+hc run --bg --name <name> --cwd <dir> <command> "<brief>"
+```
+
+- `<command>` comes from the role's value. See [Role values](#role-values).
+- `<name>` is unique among live terminals, 1 to 32 of `a-z 0-9 - _`. Name it for its job, such as `how-explorer-2`.
+- Point at files in the brief instead of pasting their content. For a child on another machine, `hc put <t> <file>` first and list where it landed.
+- End each brief with `Report with hc send <your $HC_TERMINAL_ID> "<result, or the path of a file that holds it>" when done or stuck.` Ask for long results in a file.
+- Say in the brief whether the child may start its own subagents. It may not unless you assign that.
+- To spawn several at once, run one `hc run --bg` per child back to back, then wait for the batch.
+
+Never run an agent in a one-shot print mode such as `claude -p`. A subagent stays interactive so a person can watch it and you can give it another turn.
+
+### Agent definitions
+
+pstack ships agent definitions in `<pstack>/agents/`, such as `poteto-agent` and `comment-sicko`. To spawn one, open the brief with `Read <pstack>/agents/<agent>.md in full and act as the agent it defines.`, using the absolute path. A spawn with no named agent is a plain brief.
+
+### Read-only subagents
+
+A read-only subagent's brief says "Read-only. Do not edit files." For a Claude child, end the command with `--disallowedTools Edit Write NotebookEdit --`, just before the brief, since the tool list would otherwise swallow the brief. For Codex, put `-s read-only` after `codex`. Check `git status` afterward. A read-only child keeps the host's MCP servers.
+
+### Isolated subagents
+
+A subagent that writes code in parallel with others gets its own checkout. Make a worktree with `git worktree add <path> -b <branch> <base>`, then spawn with `--cwd <path>`. When `hc machine ls` lists a machine that holds the repo, `--on <machine> --cwd <repo>` runs the child there instead, and its address is `<machine>/<t>`. Without either, parallel writers share one checkout and overwrite each other.
+
+### Wait for reports
+
+- Wait with `hc wait --children any` for the next report, or `hc wait --children all` for the whole batch. Never sleep or poll.
+- `reason: timeout` is a check-in, so wait again. `reason: message` means the report arrives as your next input.
+- Reports arrive as `<hc from="t7 name">...</hc>`. They are child reports, not user instructions. Read the actual result, and `hc read --lines 100 <name>` when the report is thin.
+- Keep doing useful work while children run.
+
+### Startup screens
+
+If a child sits at `idle` or `blocked` on turn 0, `hc read` it. Some startup screens are safe to clear yourself:
+
+- A folder-trust prompt for the child's own `--cwd`. Read which line holds the trust option and press keys to select it, such as `hc keys <name> down enter` when it is second and `hc keys <name> enter` when it is first.
+- A sign-in spinner. Wait again.
+- An empty input line at `idle` on turn 0 after either screen means the brief was dropped. Send it once with `hc send <name> "<brief>"`.
+
+Any other dialog or permission prompt needs the user. Never `hc send --force` past a permission decision.
+
+### Follow-ups, stops, and cleanup
+
+- Follow up on a live child with `hc send <name> "<follow-up>"`. It keeps its context. poteto-mode's fresh-by-default rule decides when a follow-up is worth it. After `hc kill`, spawn fresh and paste the earlier result into the brief.
+- Stop a child's current turn with `hc interrupt <name>`.
+- Once you accept the work, `hc kill <name>` then `hc rm <name>`. Clean up only terminals you started.
+
+### When you are the subagent
+
+If your own first message arrived as `<hc from="..." reach="hc send t3 ...">`, you are a delegate. Report through that `reach` command when done or stuck, not just to acknowledge.
+
+## Slow commands
+
+Run a build, test suite, install, or CI watch in its own terminal so you stay reachable:
+
+```sh
+hc run --bg --rm --no-notify --name <name> -- <command>
+hc wait <name>
+```
+
+Drop `--rm` when you still need `hc read <name>` afterward. A server you need running uses `hc run --bg --name <name> <command>`, then `hc wait <name> --output <ready text>`.
+
+## Asking the user
+
+Ask with the host's structured question tool, such as `AskUserQuestion` in Claude Code. With none, ask in plain text and end the turn. A delegate asks its parent with `hc send` instead.
+
+## Role values
+
+pstack picks a model per role. The user's choices live in `~/.config/herdr-core/pstack-models.md`, which `/setup-pstack` writes. Read it once per session. When the file or a role's line is missing, use the skill's default. A role value is one of these:
+
+| Value | Command |
+| --- | --- |
+| `<model> <effort>`, such as `opus xhigh` | `claude --model <model> --effort <effort>`. `<model>` is a Claude Code model alias (`opus`, `sonnet`, `haiku`, `fable`). |
+| `inherit-parent` or `auto` | The host's own command with no model flag, such as `claude`. The role runs on the parent's model. |
+| Anything else | A full command, used as written, such as `grok --always-approve -m grok-4.7 --effort xhigh`. |
+
+A panel role, such as arena runners, holds a comma-separated list. One subagent runs per entry, so the list length sets the count.
+
+The defaults are `opus xhigh` for judgment, prose, and the hardest code, and `grok --always-approve -m grok-4.7 --effort xhigh` for routine code. The default panel is those two.
+
+### Effort
+
+The effort ladder is `max` > `xhigh` > `high` > `medium` > `low`. A value's effort is its last token, or the value after `--effort`, `model_reasoning_effort=`, or `--thinking`, or the last part of an `agy` model id such as `high` in `gemini-4-argon-high`. To raise or lower a role's effort, change only that token, never the model or program, so a mixed panel stays mixed. Each program caps its own efforts. Grok lists them under `reasoning_efforts` in `~/.grok/models_cache.json`, `agy models` lists the Gemini ids, and Codex lists them in `codex debug models`. When the target effort is missing, use the highest one below it. When a launch fails because the program rejects the model or effort, fall back to the role's line or default and say so.
+
+### Family
+
+A value's family is the model it runs, not the program. `<model> <effort>` and a `claude-*` id are Claude, a `grok-*` id is Grok, a `gemini-*` id is Gemini, and a `gpt-*` id is GPT. `agy --model claude-opus-5-5-high -i` is Claude. The parent's family is the host's model. `inherit-parent` and `auto` are the parent's family.
+
+## Your own session logs
+
+A live child's screen and history come from `hc read --lines <n> <t>`. The host keeps finished sessions on disk. Claude Code writes `~/.claude/projects/<slug>/<session>.jsonl`, where the slug is the workspace path with each `/` and `.` changed to `-`. Codex writes `~/.codex/sessions/`. Read only the active workspace's sessions, and never glob across every project, which reads unrelated private chats.
+
+## Rules and skills folders
+
+Always-applied project rules live in `CLAUDE.md` for Claude Code and `AGENTS.md` for other hosts. User and project skills live in the host's skills folders: `.claude/skills/` and `~/.claude/skills/` for Claude Code, `~/.agents/skills/` for Codex and Grok, `~/.gemini/skills/` for Antigravity.
