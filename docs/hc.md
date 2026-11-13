@@ -80,6 +80,18 @@ A child ends when its parent ends. Two kinds of terminal should not:
 - A coordinator that owns a long program of work. Start it with `--outlive-parent`, and add `hc keep <name>` so a lost program comes back as a shell you can restart it from. Add `--on <machine>` to run it on another computer.
 - A bot that a UI, cron job, or other event wakes. Start it with `--no-parent`, so it reports to no chat. The trigger wakes it with `hc send <name> "<payload>"`, run as an argument list, never a shell string. herdr-core is local and trusts the OS user, so no sender key exists. Do not `hc keep` a bot that receives untrusted text, since a recovered shell would run that text.
 
+### Waking on a schedule
+
+`/loop` is the host's, such as Claude Code's built-in. On a host without it, start a ticker that wakes you, and kill it when the run ends:
+
+```sh
+hc run --bg --no-notify --name tick -- sh -c 'while sleep 3600; do hc send '"$HC_TERMINAL_ID"' "tick: <tick prompt>"; done'
+```
+
+### Shared store
+
+A long program keeps its plans and logs in a store folder outside every checkout, by default `~/.local/state/pstack/<program>/` on the root's machine. Name it in every owner's brief. A child on another machine cannot write there. It writes the file on its own machine and sends the path, and the root copies it with `hc file read --on <machine> <path>`.
+
 ## Asking the user
 
 Ask with the host's structured question tool, such as `AskUserQuestion` in Claude Code. With none, ask in plain text and end the turn. A delegate asks its parent with `hc send` instead.
@@ -102,7 +114,7 @@ The defaults are `opus xhigh` for judgment, prose, and the hardest code, and `gr
 
 ### Effort
 
-The effort ladder is `max` > `xhigh` > `high` > `medium` > `low`. A value's effort is its last token, or the value after `--effort`, `model_reasoning_effort=`, or `--thinking`, or the last part of an `agy` model id such as `high` in `gemini-4-argon-high`. To raise or lower a role's effort, change only that token, never the model or program, so a mixed panel stays mixed. Each program caps its own efforts. Grok lists them under `reasoning_efforts` in `~/.grok/models_cache.json`, `agy models` lists the Gemini ids, and Codex lists them in `codex debug models`. When the target effort is missing, use the highest one below it. When a launch fails because the program rejects the model or effort, fall back to the role's line or default and say so.
+The effort ladder is `max` > `xhigh` > `high` > `medium` > `low`. A value's effort is its last token, or the value after `--effort`, `model_reasoning_effort=`, or `--thinking`, or the last part of an `agy` model id such as `high` in `gemini-4-argon-high`. To raise or lower a role's effort, change only that token, never the model or program, so a mixed panel stays mixed. Each program caps its own efforts. Grok lists them under `reasoning_efforts` in `~/.grok/models_cache.json`, `agy models` lists the Gemini ids, and Codex lists them in `codex debug models`. When the target effort is missing, use the highest one below it. A launch has failed when the child ends or sits at `error` on turn 0. `hc read` shows the program's reason, such as a rejected model or effort. Fall back to the role's line or default and say so. Claude Code's models are its aliases, `opus`, `sonnet`, `haiku`, and `fable`.
 
 ### Family
 
