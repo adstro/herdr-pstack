@@ -9,3 +9,5 @@ ts	phase	decision	why	evidence	result
 2026-11-13T02:45:03Z	verify	ran /pstack:how end to end from a claude lead loaded with --plugin-dir	prove spawns, read-only flags, models file, and reports work on the real product	scratchpad e2e-how.md; children ran claude --model sonnet --effort high --disallowedTools Edit Write NotebookEdit --	VERIFIED
 2026-11-13T02:45:03Z	verify	read-only children could not write report files; told them to use a shell heredoc	found in the e2e run	docs/hc.md	fixed
 2026-11-13T02:45:03Z	verify	documented turning off the installed upstream pstack	same plugin name clashes	README.md, docs/guide/01-setup.md	fixed
+2026-11-13T03:22:40Z	start	began the verify run for gate-and-sync, plugin-load, panel-fan-out	user asked for evidence per feature	this session	open
+2026-11-13T03:23:21Z	gate-and-sync	found import-upstream.sh deletes untracked and ignored files	rsync --delete removed .verify/ on the upstream branch, including the spawn-6 evidence	fsck: no stash copy; .verify gone after the sync step	product bug
