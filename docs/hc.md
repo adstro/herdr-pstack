@@ -113,8 +113,8 @@ pstack picks a model per role. The user's choices live in `~/.config/herdr-core/
 
 | Value | Command |
 | --- | --- |
-| `<model> <effort>`, such as `opus xhigh` | `claude --model <model> --effort <effort>`. `<model>` is a Claude Code model alias (`opus`, `sonnet`, `haiku`, `fable`). |
-| `inherit-parent` or `auto` | The host's own command with no model flag, keeping every other flag a child of that program needs, such as the Claude child shape above with no `--model` or `--effort`. The role runs on the parent's model. |
+| `<model> <effort>`, such as `opus xhigh` | The Claude child shape in [Spawn a subagent](#spawn-a-subagent), with `--model <model> --effort <effort>`. `<model>` is a Claude Code model alias (`opus`, `sonnet`, `haiku`, `fable`). |
+| `inherit-parent` or `auto` | The host's command for a child, as in [Spawn a subagent](#spawn-a-subagent), with the parent's own model and effort, such as `--model opus` when the parent runs Opus. Leaving the model flag out does not inherit it. The child then runs on the program's configured default. |
 | Anything else | A full command, used as written, such as `grok --always-approve -m grok-4.7 --effort xhigh`. |
 
 A Codex value always carries `--no-daemon` and `--dangerously-bypass-approvals-and-sandbox`, such as `codex --no-daemon --dangerously-bypass-approvals-and-sandbox -m gpt-6.1-sol -c model_reasoning_effort=xhigh`. Without `--no-daemon`, Codex runs its commands outside hc. Without the bypass, Codex's sandbox blocks the child's `hc send`, which needs herdr-core's lock file. The bypass gives a Codex child the same reach as a Grok child with `--always-approve`.
