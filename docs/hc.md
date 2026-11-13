@@ -13,7 +13,14 @@ hc run --bg --name <name> --cwd <dir> <command> "<brief>"
 ```
 
 - `<command>` comes from the role's value. See [Role values](#role-values).
-- A Claude child needs permission to report. Put `--allowedTools "Bash(hc send:*)"` right after `claude`, so a child in the default permission mode can run `hc send` without stopping at a prompt. Grok, Gemini, and Codex children already carry their own approval flags.
+- A Claude child's command always has this shape, filled in from its role value:
+
+  ```sh
+  claude --plugin-dir <pstack> --settings '{"enabledPlugins":{"pstack@cursor-plugins":false}}' \
+    [--model <model> --effort <effort>] --allowedTools "Bash(hc send:*)" [read-only flags] -- "<brief>"
+  ```
+
+  `--plugin-dir` makes the child load this pstack, and the setting keeps an installed upstream pstack from loading under the same name. `--allowedTools "Bash(hc send:*)"` lets a child in the default permission mode report without stopping at a prompt. The tool lists take many values, so the `--` before the brief is required, or the brief becomes a tool name. Grok, Gemini, and Codex values carry their own approval flags.
 - `<name>` is unique among live terminals, 1 to 32 of `a-z 0-9 - _`. Name it for its job, such as `how-explorer-2`.
 - Point at files in the brief instead of pasting their content. For a child on another machine, `hc put <t> <file>` first and list where it landed.
 - End each brief with `Report with hc send <your $HC_TERMINAL_ID> "<result, or the path of a file that holds it>" when done or stuck.` Ask for long results in a file, except from a read-only child. The report must be a plain `hc send` command, not chained after other shell commands, so the permission above covers it.
@@ -30,7 +37,7 @@ pstack ships agent definitions in `<pstack>/agents/`, such as `poteto-agent` and
 
 ### Read-only subagents
 
-A read-only subagent's brief says "Read-only. Do not edit files. Explore with Read, Grep, and Glob, and run no other shell command than `hc send`." Any other command stops a Claude child at a permission prompt. For a Claude child, end the command with `--disallowedTools Edit Write NotebookEdit --`, just before the brief, since the tool list would otherwise swallow the brief. For Codex, put `-s read-only` after `codex`. A read-only child cannot write a report file, so its brief asks for the full result in the `hc send` message itself. Check `git status` afterward.
+A read-only subagent's brief says "Read-only. Do not edit files. Explore with Read and the read-only shell commands rg, grep, find, ls, cat, head, `sed -n`, and `git log`, `show`, `diff`, and `blame`." For a Claude child, the read-only flags add those commands to the allowed tools and take the editing tools away: `"Bash(rg:*)" "Bash(grep:*)" "Bash(find:*)" "Bash(ls:*)" "Bash(cat:*)" "Bash(head:*)" "Bash(sed -n:*)" "Bash(git log:*)" "Bash(git show:*)" "Bash(git diff:*)" "Bash(git blame:*)" --disallowedTools Edit Write NotebookEdit`. Any other shell command stops it at a permission prompt. For Codex, put `-s read-only` after `codex`. A read-only child cannot write a report file, so its brief asks for the full result in the `hc send` message itself. Check `git status` afterward.
 
 ### Isolated subagents
 
@@ -104,7 +111,7 @@ pstack picks a model per role. The user's choices live in `~/.config/herdr-core/
 | Value | Command |
 | --- | --- |
 | `<model> <effort>`, such as `opus xhigh` | `claude --model <model> --effort <effort>`. `<model>` is a Claude Code model alias (`opus`, `sonnet`, `haiku`, `fable`). |
-| `inherit-parent` or `auto` | The host's own command with no model flag, such as `claude`. The role runs on the parent's model. |
+| `inherit-parent` or `auto` | The host's own command with no model flag, keeping every other flag a child of that program needs, such as the Claude child shape above with no `--model` or `--effort`. The role runs on the parent's model. |
 | Anything else | A full command, used as written, such as `grok --always-approve -m grok-4.7 --effort xhigh`. |
 
 A Codex value always carries `--no-daemon`, such as `codex --no-daemon -m gpt-6.1-sol -c model_reasoning_effort=xhigh`. Without it, Codex runs its commands outside hc.

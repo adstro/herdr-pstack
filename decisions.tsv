@@ -14,3 +14,5 @@ ts	phase	decision	why	evidence	result
 2026-11-13T03:23:49Z	gate-and-sync	reran gate-and-sync after the import fix	prove the gate and an idempotent sync, and that evidence survives	.verify/gate-2/{gate,detect,sync,guard}.txt	VERIFIED
 2026-11-13T03:24:12Z	plugin-load	ran /pstack:poteto-help through the verify lead	prove the port's skills load instead of upstream's	.verify/load-1/skills-loaded.txt, answer.md	VERIFIED
 2026-11-13T03:34:37Z	panel-fan-out	let a child's trust prompt for the repo that holds its worktree be cleared	grok and codex seats in worktrees asked to trust the main checkout, and hc.md only allowed the child's own cwd	screens of t11n and t11q	doc gap fixed
+2026-11-13T03:34:55Z	panel-fan-out	left the grok seat's 402 for the lead to handle	Grok Build usage balance exhausted is an account precondition, and it exercises panel-fallback	hc get t11n: Request failed (402)	grok seat unverified
+2026-11-13T03:54:32Z	panel-fan-out	rebuilt the claude child command as one shape	panel findings 2, 4, 6: children loaded upstream pstack, the tool list swallowed the brief, and read-only children had no search tools	.verify/panel-1/answer.md findings 2,4,6	fixed
