@@ -54,4 +54,4 @@ Keep every behavior. Change only how it runs. Make the smallest edit that remove
 | `/plugin` install text, Cursor product mentions in docs | herdr install text from the README. Keep the upstream author credit and links to cursor/plugins. |
 | Bugbot | Keep it. It is a GitHub-side reviewer, and its comments are ordinary review threads. Drop any step that configures it in a Cursor dashboard. |
 
-Leave TypeScript `readonly` and GraphQL `endCursor` alone. They are code, not plumbing, and the gate skips them.
+Leave TypeScript `readonly` and GraphQL `endCursor` alone. They are code, not plumbing, and the gate skips `readonly __brand`.

@@ -101,7 +101,7 @@ A value's family is the model it runs, not the program. `<model> <effort>` and a
 
 ## Your own session logs
 
-A live child's screen and history come from `hc read --lines <n> <t>`. The host keeps finished sessions on disk. Claude Code writes `~/.claude/projects/<slug>/<session>.jsonl`, where the slug is the workspace path with each `/` and `.` changed to `-`. Codex writes `~/.codex/sessions/YYYY/MM/DD/` for every workspace together, so match a Codex session by the working directory its first entry records. Read only the active workspace's sessions, and never glob across every project, which reads unrelated private chats.
+A live child's screen and history come from `hc read --lines <n> <t>`. The host keeps finished sessions on disk. Claude Code writes `~/.claude/projects/<slug>/<session>.jsonl`, where the slug is the workspace path with every character other than a letter or digit changed to `-`. Codex writes `~/.codex/sessions/YYYY/MM/DD/` for every workspace together, so match a Codex session by the working directory its first entry records. Read only the active workspace's sessions, and never glob across every project, which reads unrelated private chats.
 
 ## Rules and skills folders
 

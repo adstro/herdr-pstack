@@ -10,7 +10,7 @@ const TERMS = {
   subagent_type: /\bsubagent_type\b/,
   generalPurpose: /\bgeneralPurpose\b/,
   run_in_background: /\brun_in_background\b/,
-  readonly: /\breadonly\b/,
+  readonly: /\breadonly\b(?! __brand)/,
   ".cursor path": /\.cursor\b/,
   ".mdc rule": /\.mdc\b|\balwaysApply\b/,
   "cursor-team-kit": /\bcursor-team-kit\b/,
