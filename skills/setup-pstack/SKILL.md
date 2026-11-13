@@ -18,10 +18,10 @@ Write each detected model as a role value:
 - A Claude model as `<model> <effort>`, such as `opus xhigh`.
 - A Grok model as `grok --always-approve -m <model> --effort <effort>`.
 - A Gemini model as `agy --dangerously-skip-permissions --model <id> -i`, where `<id>` is the first tab-separated field of a line `agy models` prints.
-- A Codex model as `codex --no-daemon -m <model> -c model_reasoning_effort=<effort>`.
+- A Codex model as `codex --no-daemon --dangerously-bypass-approvals-and-sandbox -m <model> -c model_reasoning_effort=<effort>`.
 - Any other model as its full command with the effort last.
 
-The Grok and Gemini flags let a subagent run tools without a person approving each one. Without them, every such subagent stops at its first command.
+The Grok, Gemini, and Codex flags let a subagent run tools, including its `hc send` report, without a person approving each one. Without them, every such subagent stops at its first command.
 
 ### 2. Load current state
 

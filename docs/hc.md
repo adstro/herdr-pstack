@@ -37,7 +37,7 @@ pstack ships agent definitions in `<pstack>/agents/`, such as `poteto-agent` and
 
 ### Read-only subagents
 
-A read-only subagent's brief says "Read-only. Do not edit files. Explore with Read and the read-only shell commands rg, grep, find, ls, cat, head, `sed -n`, and `git log`, `show`, `diff`, and `blame`." For a Claude child, the read-only flags add those commands to the allowed tools and take the editing tools away: `"Bash(rg:*)" "Bash(grep:*)" "Bash(find:*)" "Bash(ls:*)" "Bash(cat:*)" "Bash(head:*)" "Bash(sed -n:*)" "Bash(git log:*)" "Bash(git show:*)" "Bash(git diff:*)" "Bash(git blame:*)" --disallowedTools Edit Write NotebookEdit`. Any other shell command stops it at a permission prompt. For Codex, put `-s read-only` after `codex`. A read-only child cannot write a report file, so its brief asks for the full result in the `hc send` message itself. Check `git status` afterward.
+A read-only subagent's brief says "Read-only. Do not edit files. Explore with Read and the read-only shell commands rg, grep, find, ls, cat, head, `sed -n`, and `git log`, `show`, `diff`, and `blame`." For a Claude child, the read-only flags add those commands to the allowed tools and take the editing tools away: `"Bash(rg:*)" "Bash(grep:*)" "Bash(find:*)" "Bash(ls:*)" "Bash(cat:*)" "Bash(head:*)" "Bash(sed -n:*)" "Bash(git log:*)" "Bash(git show:*)" "Bash(git diff:*)" "Bash(git blame:*)" --disallowedTools Edit Write NotebookEdit`. Any other shell command stops it at a permission prompt. A Codex child runs outside Codex's sandbox so it can reach hc, so its brief alone keeps it read-only. A read-only child cannot write a report file, so its brief asks for the full result in the `hc send` message itself. Check `git status` afterward.
 
 ### Isolated subagents
 
@@ -114,7 +114,7 @@ pstack picks a model per role. The user's choices live in `~/.config/herdr-core/
 | `inherit-parent` or `auto` | The host's own command with no model flag, keeping every other flag a child of that program needs, such as the Claude child shape above with no `--model` or `--effort`. The role runs on the parent's model. |
 | Anything else | A full command, used as written, such as `grok --always-approve -m grok-4.7 --effort xhigh`. |
 
-A Codex value always carries `--no-daemon`, such as `codex --no-daemon -m gpt-6.1-sol -c model_reasoning_effort=xhigh`. Without it, Codex runs its commands outside hc.
+A Codex value always carries `--no-daemon` and `--dangerously-bypass-approvals-and-sandbox`, such as `codex --no-daemon --dangerously-bypass-approvals-and-sandbox -m gpt-6.1-sol -c model_reasoning_effort=xhigh`. Without `--no-daemon`, Codex runs its commands outside hc. Without the bypass, Codex's sandbox blocks the child's `hc send`, which needs herdr-core's lock file. The bypass gives a Codex child the same reach as a Grok child with `--always-approve`.
 
 A panel role, such as arena runners, holds a comma-separated list. One subagent runs per entry, so the list length sets the count.
 
