@@ -2,7 +2,7 @@
 
 pstack runs inside an agent CLI (the host, such as Claude Code or Codex) in a terminal that herdr-core manages. `hc` drives herdr-core, and `$HC_TERMINAL_ID` is your address. Keep the host's own tools for files, edits, todos, and questions. Use `hc` for every subagent, slow command, and other machine, even when the host has its own subagent tool, so each helper stays watchable, steerable, and on the model its role names. `hc --help` and the `hc` skill have the exact flags.
 
-`<pstack>` below means the folder that holds this file's `docs/` and `skills/`.
+`<pstack>` below means the pstack checkout, the folder that holds `.claude-plugin/`, `docs/`, and `skills/`. Resolve links to find it, as in `cd -P "$(dirname <path of this file>)/.." && pwd`. Under the Codex install, this file is read through `~/.agents/docs`, a link into the checkout, so the resolved path is the checkout, not `~/.agents`.
 
 ## Spawn a subagent
 
