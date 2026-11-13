@@ -42,3 +42,12 @@ ts	phase	decision	why	evidence	result
 2026-11-13T05:36:40Z	skill-tool	routed skills are entered by reading their SKILL.md, not the Skill tool	finding I: the Skill tool refuses 57 of 61 skills; removing disable-model-invocation would let skills load on keyword matches	.verify/route-1/tool-calls.txt: Read skills/architect/SKILL.md, no Skill(pstack:architect); answer # Architect	VERIFIED
 2026-11-13T05:37:17Z	audit	replaced rg with grep -rlF in the worktree audit	finding E: rg was only a shell function, so every worktree showed safe	.verify/interrogate-final/rerun/E.txt: verify-recent-chat with no rg	VERIFIED
 2026-11-13T05:37:17Z	audit	the audit reads Grok session folders and agy conversation databases per worktree	finding H: worktrees used by Grok or agy showed safe; fixture used real on-disk layouts since Grok is out of quota	.verify/interrogate-final/rerun/H-before.txt vs H-after.txt	VERIFIED
+2026-11-13T05:39:40Z	wait	wait.sh exits 2 when the lead exits	finding A: hc wait's ended exit matched no branch	.verify/interrogate-final/rerun/A.txt	VERIFIED
+2026-11-13T05:39:40Z	gate	gate decodes the root with fileURLToPath	finding C: a space stayed %20	rerun/C.txt	VERIFIED
+2026-11-13T05:39:40Z	gate	gate checks links to headings in the same file	finding B: links starting with # were skipped	rerun/B.txt, B-codex.txt	VERIFIED
+2026-11-13T05:39:40Z	ticker	ticker reads its prompt from a file	finding F: backticks and $VAR ran as shell code on every tick	rerun/F.txt	VERIFIED
+2026-11-13T05:39:40Z	links	poteto-help links the readme on github	finding G: ../../README.md does not exist under ~/.agents	rerun/G.txt	VERIFIED
+2026-11-13T05:39:40Z	codex	<pstack> resolves to the checkout through the docs link	finding L: Claude children loaded ~/.agents as a plugin named .agents	rerun/L.txt	VERIFIED
+2026-11-13T05:39:40Z	verify-tools	evidence keeps backslash-continued hc commands whole	finding J: the program and model flags were dropped	rerun/J.txt	VERIFIED
+2026-11-13T05:39:40Z	verify-tools	doctor counts staged and untracked changes as dirty	finding K: git diff --quiet ignored both	rerun/K.txt, K-isolated.txt	VERIFIED
+2026-11-13T05:39:40Z	close	all 11 findings rerun against final main and passed; gate 0 hits	user's done check	.verify/interrogate-final/rerun/	VERIFIED
