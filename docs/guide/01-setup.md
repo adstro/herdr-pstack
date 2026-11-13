@@ -12,6 +12,12 @@ For Claude Code, load this repository as a plugin. Inside a herdr space, run:
 claude --plugin-dir <path to this repo>
 ```
 
+If Claude Code also has the upstream pstack plugin installed, both load under the same `pstack` name. Turn the upstream one off for these sessions:
+
+```bash
+claude --plugin-dir <path to this repo> --settings '{"enabledPlugins":{"pstack@cursor-plugins":false}}'
+```
+
 Claude Code prefixes plugin commands, so each command in this guide takes a `pstack:` prefix there, such as `/pstack:setup-pstack`.
 
 For Codex, this repository is a skills folder. Link each skill into `~/.agents/skills/` and start Codex inside a herdr space. The [README](../../README.md#install) has the commands. [Running pstack on herdr](../hc.md) covers how the skills use `hc`.

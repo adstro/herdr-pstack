@@ -22,6 +22,12 @@ in claude code, this repository is a plugin. inside a herdr space, start claude 
 claude --plugin-dir <path to this repo>
 ```
 
+if claude code also has the upstream pstack plugin installed, both load under the same `pstack` name. turn the upstream one off for these sessions:
+
+```bash
+claude --plugin-dir <path to this repo> --settings '{"enabledPlugins":{"pstack@cursor-plugins":false}}'
+```
+
 claude code prefixes plugin commands, so `/poteto-mode` is `/pstack:poteto-mode`.
 
 in codex, this repository is a skills folder. link each skill into `~/.agents/skills/`, then start codex inside a herdr space:

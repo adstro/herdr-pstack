@@ -1,0 +1,11 @@
+ts	phase	decision	why	evidence	result
+2026-11-13T02:45:03Z	frame	port into a standalone repo regenerated from upstream, not a hand fork	user picked standalone; keeps upstream syncable	PORTING.md, scripts/import-upstream.sh	done
+2026-11-13T02:45:03Z	harness	built a gate that counts Cursor-only terms and broken links before porting	so progress reads as old count vs new count	scripts/check-native.mjs; baseline 200 hits in 46 files	baseline
+2026-11-13T02:45:03Z	harness	wrote docs/hc.md as the one hc reference and ported how by hand to learn the recipe	skills link to one place instead of repeating the spawn recipe	commit bce6406	how clean
+2026-11-13T02:45:03Z	port	split remaining files across 4 opus delegates by seam, disjoint files, no commits	parallel prose rewrites with no shared files	hc terminals port-*; reports in session scratchpad	all 4 reported
+2026-11-13T02:45:03Z	port	reviewed each delegate diff and folded their gaps into docs/hc.md	delegates reported missing recipes: MCP per program, store, ticker, long-lived terminals	commits 3c377b5 onward	gate 0 hits
+2026-11-13T02:45:03Z	port	gate flagged TypeScript readonly __brand; narrowed the rule instead of allowlisting	it is code, not plumbing	scripts/check-native.mjs	fixed
+2026-11-13T02:45:03Z	verify	ran poteto-mode script tests	a delegate renamed a plan skeleton heading	bun test: 61 pass 0 fail	VERIFIED
+2026-11-13T02:45:03Z	verify	ran /pstack:how end to end from a claude lead loaded with --plugin-dir	prove spawns, read-only flags, models file, and reports work on the real product	scratchpad e2e-how.md; children ran claude --model sonnet --effort high --disallowedTools Edit Write NotebookEdit --	VERIFIED
+2026-11-13T02:45:03Z	verify	read-only children could not write report files; told them to use a shell heredoc	found in the e2e run	docs/hc.md	fixed
+2026-11-13T02:45:03Z	verify	documented turning off the installed upstream pstack	same plugin name clashes	README.md, docs/guide/01-setup.md	fixed
