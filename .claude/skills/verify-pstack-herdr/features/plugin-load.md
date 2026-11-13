@@ -19,7 +19,7 @@ Preconditions:
 
 - `doctor.sh` prints no `FAIL` line.
 
-- **Ask for help.** Run `scripts/launch.sh load-<n> "/pstack:poteto-help which skill explains how a piece of code works?"`, then `hc wait vp-load-<n>` until it stops working. `answer.md` names `/how`.
+- **Ask for help.** Run `scripts/launch.sh load-<n> "/pstack:poteto-help which skill explains how a piece of code works?"`, then `hc wait --children all` until it stops working. `answer.md` names `/how`.
 - **Check the source.** Run `scripts/evidence.sh load-<n>`. `skills-loaded.txt` lists `<repo>/skills/poteto-help` and nothing under `cursor/plugins`.
 - **Clean up.** Run `scripts/cleanup.sh load-<n>`. It prints `cleaned`.
 

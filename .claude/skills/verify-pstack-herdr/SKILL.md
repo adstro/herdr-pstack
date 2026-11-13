@@ -27,7 +27,7 @@ It checks that the hc core answers, `claude` is on `PATH`, the plugin manifest v
 
 The prompt is what a user would type, such as `/pstack:how how does scripts/check-native.mjs pick which files to scan? Take the simple path.` The script starts the lead with this checkout as the plugin, with the installed upstream `pstack@cursor-plugins` turned off. The lead runs in `acceptEdits` mode with a short allowlist of shell commands, chiefly `hc`. Any other command stops at a prompt and the lead shows `blocked`, which is a finding to report, not something to approve blindly. Set `VP_PERMISSION_MODE=bypassPermissions` only when the user runs their own leads that way and asks for it. Children keep their default permission mode, as a user's would, so a child stuck at a prompt is a real product bug. It appends a line telling the lead to write its final answer to `.verify/<run-id>/answer.md`.
 
-Ready means the lead has taken its first turn. Wait with `hc wait vp-<run-id>`. A `reason: timeout` is a check-in, so wait again. The lead is finished when it stops working and `answer.md` exists. If it sits at `blocked` or `idle` on turn 0, `hc read --lines 60 vp-<run-id>` and clear a folder-trust prompt with `hc keys vp-<run-id> enter`.
+Ready means the lead has taken its first turn. Wait with `hc wait --children all`, not `hc wait vp-<run-id>`, which returns at once on the startup `idle` before the task lands. A `reason: timeout` is a check-in, so wait again. The lead is finished when it stops working and `answer.md` exists. If it sits at `blocked` or `idle` on turn 0, `hc read --lines 60 vp-<run-id>` and clear a folder-trust prompt with `hc keys vp-<run-id> enter`.
 
 ## Drive
 

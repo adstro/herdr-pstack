@@ -22,7 +22,7 @@ Preconditions:
 - `doctor.sh` prints no `FAIL` line.
 - The models file has a `how explainer` line, or the default `opus xhigh` applies.
 
-- **Ask a how question.** Run `scripts/launch.sh spawn-<n> "/pstack:how how does scripts/check-native.mjs pick which files to scan? Take the simple path."`, then `hc wait vp-spawn-<n>` until it stops working and `answer.md` exists.
+- **Ask a how question.** Run `scripts/launch.sh spawn-<n> "/pstack:how how does scripts/check-native.mjs pick which files to scan? Take the simple path."`, then `hc wait --children all` until it stops working and `answer.md` exists.
 - **Check the spawn.** Run `scripts/evidence.sh spawn-<n>`. `hc-commands.txt` holds an `hc run --bg --name` line whose command is `claude --model <m> --effort <e> --disallowedTools Edit Write NotebookEdit --`, with `<m>` matching the `how explainer` role.
 - **Check the report.** `screen.txt` holds a `<hc from=` line from that child.
 - **Check read-only.** `git-status.txt` matches the tree before the run.

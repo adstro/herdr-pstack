@@ -12,7 +12,7 @@ if [ "${VP_PERMISSION_MODE:-}" = bypassPermissions ]; then
   set -- --permission-mode bypassPermissions
 else
   set -- --permission-mode acceptEdits --allowedTools "Bash(hc:*)" "Bash(git status:*)" "Bash(git diff:*)" \
-    "Bash(cat:*)" "Bash(sed:*)" "Bash(ls:*)" "Bash(node scripts/check-native.mjs:*)" "Write($ev/**)"
+    "Bash(cd:*)" "Bash(cat:*)" "Bash(sed -n:*)" "Bash(ls:*)" "Bash(grep:*)" "Bash(head:*)" "Bash(tail:*)" "Bash(wc:*)" "Bash(echo:*)" "Bash(find:*)" "Bash(node scripts/check-native.mjs:*)" "Write($ev/**)"
 fi
 hc run --bg --name "vp-$id" --cwd "$repo" claude --plugin-dir "$repo" \
   --settings '{"enabledPlugins":{"pstack@cursor-plugins":false}}' \
