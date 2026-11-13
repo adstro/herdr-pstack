@@ -12,10 +12,12 @@ This repository is pstack from [cursor/plugins](https://github.com/cursor/plugin
 ```sh
 git switch upstream
 scripts/import-upstream.sh <cursor-plugins-checkout> origin/main
-git add -A && git commit -m "chore: import pstack <sha> from cursor/plugins"
+git commit -m "chore: import pstack <sha> from cursor/plugins"
 git switch main && git merge upstream
 node scripts/check-native.mjs
 ```
+
+The import stages exactly the files it copied, so commit without `git add`. The `upstream` branch has no `.gitignore`, and `git add -A` there would commit `.env`, `.verify/`, and `node_modules/`.
 
 Resolve conflicts by keeping the herdr wording and carrying over upstream's behavior change. `README.md` belongs to the port and links to upstream's, so on a conflict there keep the port's copy with `git checkout --ours README.md`. New upstream text arrives in Cursor wording without a conflict, so the gate lists it. Rewrite each hit with the rules below until the gate passes.
 
