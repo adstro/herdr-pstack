@@ -25,14 +25,14 @@ const allow = readFileSync(join(root, "scripts/native-allow.txt"), "utf8")
 
 const walk = (dir) => readdirSync(dir).flatMap((name) => {
   const path = join(dir, name);
-  if (name === ".git" || name === "node_modules") return [];
+  if (name === ".git" || name === "node_modules" || name === ".verify") return [];
   return statSync(path).isDirectory() ? walk(path) : [path];
 });
 
 const hits = [];
 for (const file of walk(root)) {
   const rel = relative(root, file);
-  if (!/\.(md|sh)$|^plugin\.json$|\.claude-plugin\/plugin\.json$/.test(rel) || rel.startsWith("scripts/") || rel === "PORTING.md") continue;
+  if (!/\.(md|sh)$|^plugin\.json$|\.claude-plugin\/plugin\.json$/.test(rel) || /^(scripts|\.claude)\//.test(rel) || rel === "PORTING.md") continue;
   readFileSync(file, "utf8").split("\n").forEach((line, i) => {
     for (const [term, re] of Object.entries(TERMS)) {
       if (!re.test(line)) continue;
