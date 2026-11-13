@@ -4,7 +4,7 @@
   "version": "0.15.36",
   "description": "if you want to go fast, go deep first. pstack helps you write less, but higher quality code. rigorous agent workflows you can parallelize with confidence. this is the herdr port: every subagent runs as an hc terminal.",
   "author": {
-    "name": "Lauren Tan"
+    "name": "Adam Stroud, Lauren Tan"
   },
   "homepage": "https://github.com/cursor/plugins/tree/main/pstack",
   "repository": "https://github.com/cursor/plugins",
