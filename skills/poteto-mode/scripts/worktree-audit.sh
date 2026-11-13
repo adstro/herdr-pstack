@@ -73,7 +73,8 @@ fi
 # Code keeps ~/.claude/projects/<slug>, the workspace path with each
 # non-alphanumeric character changed to -, so read the main checkout's folder
 # and each worktree's. Codex keeps every project under ~/.codex/sessions, so
-# read only the logs whose first line records a cwd in this repo.
+# read only the logs whose first line records a cwd in this repo. Grok and
+# agy keep sessions per working directory, so each worktree reads its own below.
 # shortcut: a Claude Code session started in a worktree's subfolder is missed;
 # also read folders named <slug>-* if that matters.
 wts=(); while read -r p; do wts+=("$p"); done < <(git worktree list --porcelain | awk '/^worktree /{print $2}')
@@ -130,6 +131,15 @@ git worktree list --porcelain | awk '/^worktree /{print $2}' | while read -r wt;
 	hits=()
 	if [ ${#logs[@]} -gt 0 ]; then
 		while read -r h; do hits+=("$h"); done < <(grep -rlF -e "${wt}/" -e "${wt}\"" "${logs[@]}" 2>/dev/null)
+	fi
+	# Grok keeps a session folder per working directory, named by its URL-encoded path.
+	g="$HOME/.grok/sessions/$(jq -rn --arg p "$wt" '$p | @uri')"
+	for d in "$g" "$g"%2F*; do [ -d "$d" ] && hits+=("$d"); done
+	# agy maps each working directory to a conversation database.
+	a="$HOME/.gemini/antigravity-cli"
+	if [ -f "$a/cache/last_conversations.json" ]; then
+		while read -r id; do [ -f "$a/conversations/$id.db" ] && hits+=("$a/conversations/$id.db"); done < <(jq -r --arg p "$wt" \
+			'to_entries[] | select(.key == $p or (.key | startswith($p + "/"))) | .value' "$a/cache/last_conversations.json" 2>/dev/null)
 	fi
 	if [ ${#hits[@]} -gt 0 ]; then
 		f=$(find "${hits[@]}" -type f -print0 2>/dev/null | xargs -0 stat "${stat_fmt[@]}" 2>/dev/null | sort -rn | head -1)
