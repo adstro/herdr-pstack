@@ -28,7 +28,7 @@ cd "$repo" || exit 1
 git rev-parse --git-dir >/dev/null 2>&1 || { echo "error: not a git repo: $repo" >&2; exit 1; }
 
 # Main worktree is the first entry; everything else is a candidate.
-main_wt=$(git worktree list --porcelain | awk '/^worktree /{print $2; exit}')
+main_wt=$(git worktree list --porcelain | sed -n 's/^worktree //p' | head -1)
 
 if [ -z "$base" ]; then
 	for cand in "$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null)" origin/main origin/master; do
@@ -77,7 +77,7 @@ fi
 # agy keep sessions per working directory, so each worktree reads its own below.
 # A session started in a worktree's subfolder lands in <slug>-*, so read those
 # too. The path match below keeps a sibling worktree's own logs from counting.
-wts=(); while read -r p; do wts+=("$p"); done < <(git worktree list --porcelain | awk '/^worktree /{print $2}')
+wts=(); while read -r p; do wts+=("$p"); done < <(git worktree list --porcelain | sed -n 's/^worktree //p')
 logs=()
 for p in "${wts[@]}"; do
 	d="$HOME/.claude/projects/$(printf '%s' "$p" | sed 's#[^A-Za-z0-9]#-#g')"
@@ -94,7 +94,7 @@ now=$(date +%s)
 echo "# base: $base"
 printf "SIZE\tAGE\tMERGED\tDIRTY\tREMOTE\tPR\tLAST_CHAT\tBUCKET\tWORKTREE\n"
 
-git worktree list --porcelain | awk '/^worktree /{print $2}' | while read -r wt; do
+git worktree list --porcelain | sed -n 's/^worktree //p' | while read -r wt; do
 	[ "$wt" = "$main_wt" ] && continue
 
 	size=$(du -sh "$wt" 2>/dev/null | awk '{print $1}')
