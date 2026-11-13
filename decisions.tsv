@@ -11,3 +11,4 @@ ts	phase	decision	why	evidence	result
 2026-11-13T02:45:03Z	verify	documented turning off the installed upstream pstack	same plugin name clashes	README.md, docs/guide/01-setup.md	fixed
 2026-11-13T03:22:40Z	start	began the verify run for gate-and-sync, plugin-load, panel-fan-out	user asked for evidence per feature	this session	open
 2026-11-13T03:23:21Z	gate-and-sync	found import-upstream.sh deletes untracked and ignored files	rsync --delete removed .verify/ on the upstream branch, including the spawn-6 evidence	fsck: no stash copy; .verify gone after the sync step	product bug
+2026-11-13T03:23:49Z	gate-and-sync	reran gate-and-sync after the import fix	prove the gate and an idempotent sync, and that evidence survives	.verify/gate-2/{gate,detect,sync,guard}.txt	VERIFIED

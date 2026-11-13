@@ -21,9 +21,10 @@ Preconditions:
 
 - **Gate passes.** Run `node scripts/check-native.mjs > .verify/gate-<n>/gate.txt; echo $? >> .verify/gate-<n>/gate.txt`. The file ends with `0 Cursor-only hits in 0 files` and `0`.
 - **Gate detects.** Run `printf 'Use the Task tool.\n' >> skills/how/SKILL.md && node scripts/check-native.mjs --list`, then `git checkout skills/how/SKILL.md`. The listing names `skills/how/SKILL.md` with `Task tool`, and the exit code is `1`.
-- **Sync is idempotent.** Run `git switch upstream && scripts/import-upstream.sh <plugins> $(cat UPSTREAM) && git status --short; git switch main`. `git status` prints nothing.
+- **Sync is idempotent.** Run `git switch upstream && scripts/import-upstream.sh <plugins> $(cat UPSTREAM) && git status --short; git switch main`. `git status --short` shows no tracked change. The only line is `?? .verify/`, because the `upstream` branch has no `.gitignore`.
 
 ## Gotchas
 
 - Always restore the planted line. A leftover edit poisons every later run.
+- Write sync evidence outside `.verify/` while on `upstream`, then move it in. Before the fix in `75a794f`, the import deleted untracked files, `.verify/` included.
 - `import-upstream.sh` refuses to run off the `upstream` branch. That is the guard, not a failure.
