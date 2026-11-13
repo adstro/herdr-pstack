@@ -17,10 +17,10 @@ hc run --bg --name <name> --cwd <dir> <command> "<brief>"
 
   ```sh
   claude --plugin-dir <pstack> --settings '{"enabledPlugins":{"pstack@cursor-plugins":false}}' \
-    [--model <model> --effort <effort>] --allowedTools "Bash(hc send:*)" [read-only flags] -- "<brief>"
+    [--model <model> --effort <effort>] [--permission-mode bypassPermissions] --allowedTools "Bash(hc send:*)" [read-only flags] -- "<brief>"
   ```
 
-  `--plugin-dir` makes the child load this pstack, and the setting keeps an installed upstream pstack from loading under the same name. `--allowedTools "Bash(hc send:*)"` lets a child in the default permission mode report without stopping at a prompt. The tool lists take many values, so the `--` before the brief is required, or the brief becomes a tool name. Grok, Gemini, and Codex values carry their own approval flags.
+  `--plugin-dir` makes the child load this pstack, and the setting keeps an installed upstream pstack from loading under the same name. A child that edits files or runs commands gets `--permission-mode bypassPermissions`, so it works unattended instead of stopping at its first shell command. A read-only child never gets it, and its tool lists keep it limited. `--allowedTools "Bash(hc send:*)"` lets a read-only child report without stopping at a prompt. The tool lists take many values, so the `--` before the brief is required, or the brief becomes a tool name. Grok, Gemini, and Codex values carry their own approval flags.
 - `<name>` is unique among live terminals: 1 to 32 of `a-z 0-9 - _ .`, starting with a letter or digit, and not shaped like a terminal id such as `t3`. Name it for its job, such as `how-explorer-2`.
 - Write the brief to a file and pass it as `"$(cat <file>)"`, so backticks, `$`, and quotes in it reach the child unchanged. Typed straight into double quotes, the shell runs every backticked word in the brief.
 - Point at files in the brief instead of pasting their content. For a child on another machine, copy each file there before the spawn with `hc file write --on <machine> <path> < <file>`, and list those paths in the brief. `hc put` needs a live terminal, so it cannot run before the child exists.

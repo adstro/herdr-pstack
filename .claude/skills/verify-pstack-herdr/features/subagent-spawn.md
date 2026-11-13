@@ -8,6 +8,7 @@ A skill that delegates starts each subagent as an `hc` terminal under the lead, 
 - `spawn-model` builds the command from the role's value in `~/.config/herdr-core/pstack-models.md`, or the skill default.
 - `spawn-readonly` gives a read-only Claude child the read-only shell commands and `--disallowedTools Edit Write NotebookEdit`, then `--` before the brief.
 - `spawn-plugin` starts each Claude child with `--plugin-dir <repo>`.
+- `spawn-writer` starts a Claude child that edits or runs commands with `--permission-mode bypassPermissions`, and never a read-only one.
 - `spawn-report` receives each child's result as `<hc from="tN name">...</hc>`.
 - `spawn-cleanup` kills and removes each child once its work is accepted.
 
