@@ -135,10 +135,11 @@ git worktree list --porcelain | awk '/^worktree /{print $2}' | while read -r wt;
 	# Grok keeps a session folder per working directory, named by its URL-encoded path.
 	g="$HOME/.grok/sessions/$(jq -rn --arg p "$wt" '$p | @uri')"
 	for d in "$g" "$g"%2F*; do [ -d "$d" ] && hits+=("$d"); done
-	# agy maps each working directory to a conversation database.
+	# agy maps each working directory to a conversation database. New messages sit in its
+	# write-ahead log until SQLite checkpoints them, so the -wal file counts too.
 	a="$HOME/.gemini/antigravity-cli"
 	if [ -f "$a/cache/last_conversations.json" ]; then
-		while read -r id; do [ -f "$a/conversations/$id.db" ] && hits+=("$a/conversations/$id.db"); done < <(jq -r --arg p "$wt" \
+		while read -r id; do for f in "$a/conversations/$id.db" "$a/conversations/$id.db-wal"; do [ -f "$f" ] && hits+=("$f"); done; done < <(jq -r --arg p "$wt" \
 			'to_entries[] | select(.key == $p or (.key | startswith($p + "/"))) | .value' "$a/cache/last_conversations.json" 2>/dev/null)
 	fi
 	if [ ${#hits[@]} -gt 0 ]; then
