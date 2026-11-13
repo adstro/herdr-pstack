@@ -19,6 +19,8 @@ Run this first, and again whenever anything looks off:
 
 It checks that the hc core answers, `claude` is on `PATH`, the plugin manifest validates, `node scripts/check-native.mjs` passes, and no other `vp-*` run is live. It prints the commit under test and whether the tree is dirty. Any `FAIL` line means stop and fix that first.
 
+After changing `launch.sh`, `wait.sh`, or `cleanup.sh`, run `.claude/skills/verify-pstack-herdr/scripts/selftest.sh`. It waits on a live `haiku` lead and on a lead that exits, and fails if `wait.sh` gets either wrong.
+
 ## Launch
 
 ```sh
