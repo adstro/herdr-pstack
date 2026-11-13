@@ -16,7 +16,7 @@ const TERMS = {
   "cursor-team-kit": /\bcursor-team-kit\b/,
   Cursor: /\bCursor\b/,
   "cloud agent": /\bcloud agents?\b|environment: "cloud"/i,
-  "model slug": /\b(claude-(opus|sonnet|haiku|fable)-[\d-]+-(low|medium|high|xhigh|max)|grok-[\d.]+-(low|medium|high|xhigh|max))\b|-fast\b/,
+  "model slug": /\b(claude-(opus|sonnet|haiku|fable)-[\d-]+-(low|medium|high|xhigh|max)|grok-[\d.]+-(low|medium|high|xhigh|max))\b|-fast\b|\bfast or standard speed\b|\bstandard speed\b/,
   Automations: /\bAutomations?\b|\bSendToUser\b|\bupdate_state\b/,
 };
 // Each line is `<path>\t<substring>`: a hit on a line of that file holding the substring is legitimate.
