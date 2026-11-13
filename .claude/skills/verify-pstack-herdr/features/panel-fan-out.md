@@ -21,7 +21,7 @@ Preconditions:
 - `doctor.sh` prints no `FAIL` line.
 - Each program named in the panel role is on `PATH` and signed in. Check `grok models`, `agy models`, and `codex login status`.
 
-- **Run a panel.** Run `scripts/launch.sh panel-<n> "/pstack:interrogate is a single docs/hc.md reference better than restating the spawn recipe in each skill?"`, then `hc wait vp-<run-id>` until `answer.md` exists.
+- **Run a panel.** Run `scripts/launch.sh panel-<n> "/pstack:interrogate is a single docs/hc.md reference better than restating the spawn recipe in each skill?"`, then `scripts/wait.sh <run-id>`.md` exists.
 - **Check the seats.** Run `scripts/evidence.sh panel-<n>`. `hc-commands.txt` holds one `hc run` line per `interrogate reviewers` entry, each with that entry's command.
 - **Check the reports.** `screen.txt` holds one `<hc from=` line per seat, or a stated fallback for each seat that failed to launch.
 - **Clean up.** Run `scripts/cleanup.sh panel-<n>`.

@@ -27,7 +27,13 @@ It checks that the hc core answers, `claude` is on `PATH`, the plugin manifest v
 
 The prompt is what a user would type, such as `/pstack:how how does scripts/check-native.mjs pick which files to scan? Take the simple path.` The script starts the lead with this checkout as the plugin, with the installed upstream `pstack@cursor-plugins` turned off. The lead runs with `--permission-mode bypassPermissions`, which the user chose so runs finish unattended. That lets the test lead run any command on this machine. Set `VP_PERMISSION_MODE` to another mode, such as `default`, to run it stricter, and expect it to stop at prompts. Children keep their default permission mode, as a user's would, so a child stuck at a prompt is a real product bug. It appends a line telling the lead to write its final answer to `.verify/<run-id>/answer.md`.
 
-Ready means the lead has taken its first turn. Wait with `hc wait vp-<run-id>`. Until the lead reports its first status, a wait can return at once with a stale `idle` on turn 0. Read the screen, and when it shows the lead working, wait again. A `reason: timeout` is a check-in, so wait again. The lead is finished when it stops working and `answer.md` exists. If it sits at `blocked` or `idle` on turn 0, `hc read --lines 60 vp-<run-id>` and clear a folder-trust prompt with `hc keys vp-<run-id> enter`.
+Then wait for it to finish:
+
+```sh
+.claude/skills/verify-pstack-herdr/scripts/wait.sh <run-id>
+```
+
+It exits 0 once `answer.md` exists, 2 when the lead is `blocked`, errored, or gone, and 3 when the lead finished without an answer. Use it instead of a bare `hc wait`, which returns at once on the stale `idle` hc shows before the lead's first status. On exit 2, `hc read --lines 60 vp-<run-id>` and clear a folder-trust prompt with `hc keys vp-<run-id> enter`. Any other prompt is a finding to report.
 
 ## Drive
 
