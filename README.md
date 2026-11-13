@@ -36,9 +36,9 @@ In Codex, this repository is a skills folder. Link each skill into `~/.agents/sk
 
 ```bash
 mkdir -p ~/.agents/skills
-ln -s <path to this repo>/skills/* ~/.agents/skills/
-ln -s <path to this repo>/docs ~/.agents/docs
-ln -s <path to this repo>/agents ~/.agents/agents
+ln -sfn <path to this repo>/skills/* ~/.agents/skills/
+ln -sfn <path to this repo>/docs ~/.agents/docs
+ln -sfn <path to this repo>/agents ~/.agents/agents
 ```
 
 The skills' relative links to `docs/` and `agents/` resolve under `~/.agents/`, so those folders need links too. Keep this checkout where it is. `git pull` in it updates both hosts.
