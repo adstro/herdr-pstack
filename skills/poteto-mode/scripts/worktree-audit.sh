@@ -75,13 +75,13 @@ fi
 # and each worktree's. Codex keeps every project under ~/.codex/sessions, so
 # read only the logs whose first line records a cwd in this repo. Grok and
 # agy keep sessions per working directory, so each worktree reads its own below.
-# shortcut: a Claude Code session started in a worktree's subfolder is missed;
-# also read folders named <slug>-* if that matters.
+# A session started in a worktree's subfolder lands in <slug>-*, so read those
+# too. The path match below keeps a sibling worktree's own logs from counting.
 wts=(); while read -r p; do wts+=("$p"); done < <(git worktree list --porcelain | awk '/^worktree /{print $2}')
 logs=()
 for p in "${wts[@]}"; do
 	d="$HOME/.claude/projects/$(printf '%s' "$p" | sed 's#[^A-Za-z0-9]#-#g')"
-	[ -d "$d" ] && logs+=("$d")
+	for f in "$d" "$d"-*; do [ -d "$f" ] && logs+=("$f"); done
 done
 if [ -d "$HOME/.codex/sessions" ]; then
 	while read -r f; do
