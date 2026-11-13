@@ -32,7 +32,7 @@ for line in open(sys.argv[1]):
     for b in d["message"].get("content", []):
         if isinstance(b, dict) and b.get("type") == "tool_use":
             cmd = b["input"].get("command", "")
-            for l in cmd.splitlines():
+            for l in cmd.replace("\\\n", " ").splitlines():
                 if "hc " in l: print(l.strip())
 PY
   grep -o 'Base directory for this skill: [^"\\]*' "$log" | sort -u > "$ev/skills-loaded.txt" || true
