@@ -105,6 +105,10 @@ hc run --bg --no-notify --name tick -- sh -c 'while sleep 3600; do hc send '"$HC
 
 A long program keeps its plans and logs in a store folder outside every checkout, by default `~/.local/state/pstack/<program>/` on the root's machine. Name it in every owner's brief. A child on another machine cannot write there. It writes the file on its own machine and sends the path, and the root copies it with `hc file read --on <machine> <path>`.
 
+## Running another pstack skill
+
+When a step names another pstack skill, such as "the **architect** skill", read `<pstack>/skills/<name>/SKILL.md` in full and follow it. Do not load it with the host's skill tool. Most pstack skills set `disable-model-invocation`, so Claude Code's Skill tool refuses them unless the user typed the command, and its refusal says not to run the workflow another way. That flag keeps a skill from loading on a keyword match. A route from a skill you are already running is a deliberate entry, which reading the file makes.
+
 ## Asking the user
 
 Ask with the host's structured question tool, such as `AskUserQuestion` in Claude Code. With none, ask in plain text and end the turn. A delegate asks its parent with `hc send` instead.

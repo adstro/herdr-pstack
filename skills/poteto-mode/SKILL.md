@@ -8,7 +8,7 @@ color: yellow
 
 # Poteto mode
 
-Bundled skills live at `../<name>/SKILL.md` from this file, so put this file's absolute path in every `poteto-agent` prompt.
+Bundled skills live at `../<name>/SKILL.md` from this file, so put this file's absolute path in every `poteto-agent` prompt. Enter every skill this file routes to by reading that file, per [Running another pstack skill](../../docs/hc.md#running-another-pstack-skill).
 
 ## Non-negotiables
 
