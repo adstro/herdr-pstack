@@ -10,5 +10,7 @@ tmp=$(mktemp -d); trap 'rm -rf "$tmp"' EXIT
 git -C "$plugins" archive "$ref" pstack/skills pstack/agents pstack/docs/guide pstack/README.md pstack/LICENSE pstack/plugin.json \
   cursor-team-kit/skills/deslop cursor-team-kit/skills/control-cli cursor-team-kit/skills/control-ui | tar -x -C "$tmp"
 mv "$tmp"/cursor-team-kit/skills/* "$tmp"/pstack/skills/
-rsync -a --delete --exclude .git --exclude /scripts "$tmp"/pstack/ "$here"/
+# Remove only tracked files, so untracked and ignored work such as .verify/ survives the import.
+git -C "$here" ls-files -z -- . ':!scripts' | (cd "$here" && xargs -0 rm -f)
+cp -R "$tmp"/pstack/. "$here"/
 git -C "$plugins" rev-parse "$ref" > "$here/UPSTREAM"
