@@ -11,7 +11,7 @@ Build a page the user clicks. A server on this computer turns each click into on
 
 ## Start the bot
 
-The bot is a long-lived agent terminal with a fixed name, 1 to 32 of `a-z 0-9 - _`. If `hc ls` already lists that name, reuse it. Otherwise start it per [Spawn a subagent](../../docs/hc.md#spawn-a-subagent), with `--no-parent` so it outlives this chat and does not report to it:
+The bot is a long-lived agent terminal with a fixed name, 1 to 32 of `a-z 0-9 - _ .`, starting with a letter or digit and not shaped like `t3`. If `hc ls` already lists that name, reuse it. Otherwise start it per [Spawn a subagent](../../docs/hc.md#spawn-a-subagent), with `--no-parent` so it outlives this chat and does not report to it:
 
 ```
 hc run --bg --no-parent --name <bot> --cwd <dir> <command> "<brief>"
