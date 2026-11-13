@@ -13,9 +13,10 @@ hc run --bg --name <name> --cwd <dir> <command> "<brief>"
 ```
 
 - `<command>` comes from the role's value. See [Role values](#role-values).
+- A Claude child needs permission to report. Put `--allowedTools "Bash(hc send:*)"` right after `claude`, so a child in the default permission mode can run `hc send` without stopping at a prompt. Grok, Gemini, and Codex children already carry their own approval flags.
 - `<name>` is unique among live terminals, 1 to 32 of `a-z 0-9 - _`. Name it for its job, such as `how-explorer-2`.
 - Point at files in the brief instead of pasting their content. For a child on another machine, `hc put <t> <file>` first and list where it landed.
-- End each brief with `Report with hc send <your $HC_TERMINAL_ID> "<result, or the path of a file that holds it>" when done or stuck.` Ask for long results in a file.
+- End each brief with `Report with hc send <your $HC_TERMINAL_ID> "<result, or the path of a file that holds it>" when done or stuck.` Ask for long results in a file, except from a read-only child. The report must be a plain `hc send` command, not chained after other shell commands, so the permission above covers it.
 - Say in the brief whether the child may start its own subagents. It may not unless you assign that.
 - To spawn several at once, run one `hc run --bg` per child back to back, then wait for the batch.
 
@@ -29,7 +30,7 @@ pstack ships agent definitions in `<pstack>/agents/`, such as `poteto-agent` and
 
 ### Read-only subagents
 
-A read-only subagent's brief says "Read-only. Do not edit files." For a Claude child, end the command with `--disallowedTools Edit Write NotebookEdit --`, just before the brief, since the tool list would otherwise swallow the brief. For Codex, put `-s read-only` after `codex`. Its Write tool is off, so the brief tells it to write any report file with a shell heredoc, at a path outside the repo. Check `git status` afterward.
+A read-only subagent's brief says "Read-only. Do not edit files." For a Claude child, end the command with `--disallowedTools Edit Write NotebookEdit --`, just before the brief, since the tool list would otherwise swallow the brief. For Codex, put `-s read-only` after `codex`. A read-only child cannot write a report file, so its brief asks for the full result in the `hc send` message itself. Check `git status` afterward.
 
 ### Isolated subagents
 
