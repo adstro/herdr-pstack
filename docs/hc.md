@@ -28,6 +28,8 @@ hc run --bg --name <name> --cwd <dir> <command> "<brief>"
 - Say in the brief whether the child may start its own subagents. It may not unless you assign that.
 - To spawn several at once, run one `hc run --bg` per child back to back, then wait for the batch.
 
+A Grok, Gemini, or Codex child can load another installed pstack when it calls a skill by name, since it has no plugin-folder flag. When such a child should follow a pstack skill, put the skill's absolute path in the brief, as `Read <pstack>/skills/<name>/SKILL.md and follow it.`
+
 Each child gets the MCP servers its own program is configured with. A `claude` child has the host's servers when the host is Claude Code. A `grok`, `codex`, or `agy` child has that program's own config, listed by `grok mcp list` or `codex mcp list`. Run a subagent that needs a specific MCP server on a program that has it.
 
 Never run an agent in a one-shot print mode such as `claude -p`. A subagent stays interactive so a person can watch it and you can give it another turn.

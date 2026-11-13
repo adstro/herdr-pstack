@@ -26,3 +26,4 @@ ts	phase	decision	why	evidence	result
 2026-11-13T04:20:25Z	panel-fan-out	said how to quote a brief and a report	panel-3 finding 1: backticks in briefs and reports ran as shell commands, splitting or dropping text	.verify/panel-3/answer.md finding 1	fixed
 2026-11-13T04:20:25Z	panel-fan-out	pointed the role rows at the full child shape and made inherit-parent pass the parent's model	panel-3 findings 3 and 4: a role row built a bare claude command, and no model flag ran the settings default, not the parent's model	.verify/panel-3/answer.md findings 3,4	fixed
 2026-11-13T04:20:25Z	panel-fan-out	corrected the terminal name rule	panel-3 finding 5: hc rejects names like t3 or _probe that the old rule allowed	hc run --name t3: bad name	fixed
+2026-11-13T04:20:25Z	panel-fan-out	told non-claude children to read pstack skills by absolute path	panel-3 finding 2: grok resolved pstack skills to the upstream plugin cache	.verify/panel-3/answer.md finding 2	fixed
