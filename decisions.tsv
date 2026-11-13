@@ -34,3 +34,6 @@ ts	phase	decision	why	evidence	result
 2026-11-13T04:34:44Z	start	began verify run for subagent-spawn and model-setup	user asked for evidence per feature	session on herdr-pstack plugin	open
 2026-11-13T04:36:34Z	subagent-spawn	ran subagent-spawn on the port	redo the proof whose evidence the import bug deleted	.verify/spawn-7: hc-commands, screen report from t147, skills-loaded	VERIFIED
 2026-11-13T04:36:34Z	subagent-spawn	stopped evidence.sh cutting commands at 300 characters	the cut hid the read-only flags and the -- before the brief, the part that proves the spec	.verify/spawn-7/hc-commands.txt now holds the full command	fixed
+2026-11-13T04:37:49Z	model-setup	ran setup at the same budget, then a second run at medium	an unchanged budget let the lead copy the file onto itself, so the real write path never ran	.verify/setup-1/models.diff empty, answer.md	partial, rerun
+2026-11-13T04:41:01Z	model-setup	ran setup at medium, checked all 17 roles at high, restored the user's file byte for byte	prove the real write and the budget mapping	.verify/setup-2/models.written.md, models.diff, restore.txt	VERIFIED
+2026-11-13T04:41:01Z	model-setup	made the recipe use /bin/cp -f and pick a different budget	the user's cp -i alias stalled the restore, and an unchanged budget skipped the write	.claude/skills/verify-pstack-herdr/features/model-setup.md	fixed
