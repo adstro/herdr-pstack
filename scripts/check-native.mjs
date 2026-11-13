@@ -2,8 +2,9 @@
 // Fails while any Cursor-only plumbing term is left in the port's prose and shell scripts.
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const root = new URL("..", import.meta.url).pathname;
+const root = fileURLToPath(new URL("..", import.meta.url));
 const TERMS = {
   "Task tool": /\bTask\b/,
   AskQuestion: /\bAskQuestion\b/,
