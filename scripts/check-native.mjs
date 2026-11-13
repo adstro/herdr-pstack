@@ -47,9 +47,9 @@ const anchors = (file) => new Set([...readFileSync(file, "utf8").matchAll(/^#+ (
 for (const file of walk(root).filter((f) => f.endsWith(".md"))) {
   const rel = relative(root, file);
   for (const [, href] of readFileSync(file, "utf8").matchAll(/\]\(([^)\s]+)\)/g)) {
-    if (/^[a-z]+:|^#|^</.test(href) || !/[./]/.test(href)) continue;
+    if (/^[a-z]+:|^</.test(href) || (!href.startsWith("#") && !/[./]/.test(href))) continue;
     const [path, anchor] = href.split("#");
-    const target = join(dirname(file), decodeURI(path));
+    const target = path ? join(dirname(file), decodeURI(path)) : file;
     let ok = true;
     try { statSync(target); } catch { ok = false; }
     if (ok && anchor && target.endsWith(".md") && !anchors(target).has(anchor)) ok = false;
