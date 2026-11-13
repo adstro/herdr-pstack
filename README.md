@@ -1,6 +1,6 @@
 # pstack for herdr
 
-This is a port of [pstack](https://github.com/cursor/plugins/tree/main/pstack), Lauren Tan's set of agent skills for rigorous engineering, to the herdr app and `hc`. It keeps every pstack skill and playbook. The difference is the plumbing. Upstream runs on Cursor's subagents, models, and automations. This port runs every subagent as an `hc` terminal you can watch, steer, and attach to, each on the model its role names.
+This is a port of [pstack](https://github.com/cursor/plugins/tree/main/pstack), Lauren Tan's set of agent skills for rigorous engineering, to the herdr app and `hc`. It keeps every pstack skill and playbook and replaces only the plumbing. Upstream runs on Cursor's subagents, models, and automations. This port runs every subagent as an `hc` terminal you can watch, steer, and attach to, each on the model its role names.
 
 For what pstack is, its philosophy, and the full skill catalog, read the [upstream pstack README](https://github.com/cursor/plugins/blob/main/pstack/README.md). For a walkthrough of a first real task, read the [guide](./docs/guide/README.md). It is the upstream guide with the setup and plumbing rewritten for herdr.
 
@@ -41,7 +41,7 @@ ln -s <path to this repo>/docs ~/.agents/docs
 ln -s <path to this repo>/agents ~/.agents/agents
 ```
 
-The skills link to `../../docs/hc.md` and to `agents/`. A tool that joins paths as text reads those from `~/.agents/`, not from this checkout, so `docs` and `agents` need links there too. The links point into this checkout, so keep it where it is. `git pull` in the checkout updates both hosts.
+The skills' relative links to `docs/` and `agents/` resolve under `~/.agents/`, so those folders need links too. Keep this checkout where it is. `git pull` in it updates both hosts.
 
 ## Get started
 
@@ -52,7 +52,7 @@ Stuck, or unsure which skill fits? Ask [`/poteto-help`](./skills/poteto-help/SKI
 
 ## Keeping up with upstream
 
-The `upstream` branch holds pstack exactly as cursor/plugins ships it, and `UPSTREAM` records the commit. `main` holds the port. [`PORTING.md`](./PORTING.md) has the sync steps and the rewrite rules. `node scripts/check-native.mjs` fails while any Cursor-only plumbing or broken link is left.
+The `upstream` branch holds pstack exactly as cursor/plugins ships it, and `UPSTREAM` records the commit. `main` holds the port. [`PORTING.md`](./PORTING.md) has the sync steps and the rewrite rules, and `node scripts/check-native.mjs` lists anything a sync left in Cursor wording.
 
 ## License
 
