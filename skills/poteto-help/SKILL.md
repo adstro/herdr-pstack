@@ -35,11 +35,11 @@ When the models file is missing and it matters, ask whether the user wants to pi
 
 ## Get set up
 
-1. Install per the [README](https://github.com/adstro/herdr-pstack#install). Inside a herdr space, start Claude Code with `claude --plugin-dir <path to this repo>`, or link the skills into `~/.agents/skills/` for Codex.
+1. Install per [guide page 1](../../docs/guide/01-setup.md). Inside a herdr space, start Claude Code with `claude --plugin-dir <path to this repo>`, or link the skills into `~/.agents/skills/` for Codex.
 2. Run [`/setup-pstack`](../setup-pstack/SKILL.md). It asks for a reasoning budget, maps a model to each role, and writes the models file. New sessions read it. Then it offers once each to generate a verification skill and a formal verification skill for the project, unless the project already has one.
 3. Start a real task with `/poteto-mode`, a goal, and a check that can pass or fail.
 
-Installing changes nothing until the user invokes a skill. Only `/setup-pstack` loads from the user's words. The [README](https://github.com/adstro/herdr-pstack#readme) and [guide page 1](../../docs/guide/01-setup.md) have the details. Offer to word their first prompt with them, per [`references/prompting.md`](references/prompting.md).
+Installing changes nothing until the user invokes a skill. Only `/setup-pstack` loads from the user's words. [Guide page 1](../../docs/guide/01-setup.md) has the details. Offer to word their first prompt with them, per [`references/prompting.md`](references/prompting.md).
 
 If cost is the worry, say where the tokens go and how to spend fewer. pstack spends extra tokens on subagents and review panels. Rerun `/setup-pstack` and pick a smaller budget or cheaper models. A role set to `auto` or `inherit-parent` runs on the chat's model, which saves tokens when the chat runs on a cheaper model. A shorter panel list runs fewer subagents, one for each entry. Save `/poteto-mode` for work that needs rigor.
 
