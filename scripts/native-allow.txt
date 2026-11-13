@@ -1,4 +1,5 @@
 # <path>	<substring>  allowed Cursor mentions that are not plumbing
 docs/hc.md	agy --model claude-opus-5-5-high -i
-README.md	worked with millions of lines of code at Meta, Netflix, and Cursor
-README.md	ship high quality code at Cursor
+README.md	Upstream runs on Cursor's subagents
+README.md	in place of Cursor cloud agents
+README.md	fails while any Cursor-only plumbing

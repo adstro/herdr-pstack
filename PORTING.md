@@ -17,7 +17,7 @@ git switch main && git merge upstream
 node scripts/check-native.mjs
 ```
 
-Resolve conflicts by keeping the herdr wording and carrying over upstream's behavior change. New upstream text arrives in Cursor wording without a conflict, so the gate lists it. Rewrite each hit with the rules below until the gate passes.
+Resolve conflicts by keeping the herdr wording and carrying over upstream's behavior change. `README.md` belongs to the port and links to upstream's, so on a conflict there keep the port's copy with `git checkout --ours README.md`. New upstream text arrives in Cursor wording without a conflict, so the gate lists it. Rewrite each hit with the rules below until the gate passes.
 
 ## The gate
 
