@@ -47,7 +47,7 @@ A subagent that writes code in parallel with others gets its own checkout. Make 
 
 If a child sits at `idle` or `blocked` on turn 0, `hc read` it. Some startup screens are safe to clear yourself:
 
-- A folder-trust prompt for the child's own `--cwd`. Read which line holds the trust option and press keys to select it, such as `hc keys <name> down enter` when it is second and `hc keys <name> enter` when it is first.
+- A folder-trust prompt for the child's own `--cwd`, or for the repository that holds it. Grok and Codex ask about a worktree's main checkout, since trust applies to the whole repository. Read which line holds the trust option and press keys to select it, such as `hc keys <name> down enter` when it is second and `hc keys <name> enter` when it is first.
 - A sign-in spinner. Wait again.
 - An empty input line at `idle` on turn 0 after either screen means the brief was dropped. Send it once with `hc send <name> "<brief>"`.
 
