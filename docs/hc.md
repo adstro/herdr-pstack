@@ -22,8 +22,9 @@ hc run --bg --name <name> --cwd <dir> <command> "<brief>"
 
   `--plugin-dir` makes the child load this pstack, and the setting keeps an installed upstream pstack from loading under the same name. `--allowedTools "Bash(hc send:*)"` lets a child in the default permission mode report without stopping at a prompt. The tool lists take many values, so the `--` before the brief is required, or the brief becomes a tool name. Grok, Gemini, and Codex values carry their own approval flags.
 - `<name>` is unique among live terminals, 1 to 32 of `a-z 0-9 - _`. Name it for its job, such as `how-explorer-2`.
+- Write the brief to a file and pass it as `"$(cat <file>)"`, so backticks, `$`, and quotes in it reach the child unchanged. Typed straight into double quotes, the shell runs every backticked word in the brief.
 - Point at files in the brief instead of pasting their content. For a child on another machine, copy each file there before the spawn with `hc file write --on <machine> <path> < <file>`, and list those paths in the brief. `hc put` needs a live terminal, so it cannot run before the child exists.
-- End each brief with `Report with hc send <your $HC_TERMINAL_ID> "<result, or the path of a file that holds it>" when done or stuck.` Ask for long results in a file, except from a read-only child. The report must be a plain `hc send` command, not chained after other shell commands, so the permission above covers it.
+- End each brief with `Report with hc send <your $HC_TERMINAL_ID> "<result, or the path of a file that holds it>" when done or stuck.` Ask for long results in a file, except from a read-only child. The report must be a plain `hc send` command, not chained after other shell commands, so the permission above covers it. Put the report text in single quotes and write each `'` in it as `'\''`, so code spans and `$` arrive intact.
 - Say in the brief whether the child may start its own subagents. It may not unless you assign that.
 - To spawn several at once, run one `hc run --bg` per child back to back, then wait for the batch.
 
