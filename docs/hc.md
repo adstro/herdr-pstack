@@ -30,7 +30,7 @@ pstack ships agent definitions in `<pstack>/agents/`, such as `poteto-agent` and
 
 ### Read-only subagents
 
-A read-only subagent's brief says "Read-only. Do not edit files." For a Claude child, end the command with `--disallowedTools Edit Write NotebookEdit --`, just before the brief, since the tool list would otherwise swallow the brief. For Codex, put `-s read-only` after `codex`. A read-only child cannot write a report file, so its brief asks for the full result in the `hc send` message itself. Check `git status` afterward.
+A read-only subagent's brief says "Read-only. Do not edit files. Explore with Read, Grep, and Glob, and run no other shell command than `hc send`." Any other command stops a Claude child at a permission prompt. For a Claude child, end the command with `--disallowedTools Edit Write NotebookEdit --`, just before the brief, since the tool list would otherwise swallow the brief. For Codex, put `-s read-only` after `codex`. A read-only child cannot write a report file, so its brief asks for the full result in the `hc send` message itself. Check `git status` afterward.
 
 ### Isolated subagents
 

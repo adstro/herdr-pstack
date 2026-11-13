@@ -32,4 +32,5 @@ Preconditions:
 
 - The lead may lower or raise effort one step from the role's value, per poteto-mode's Subagents section. Check the model, and accept an effort one step off.
 - A read-only child has no Write tool, so it writes its report file with a shell heredoc. A report path outside the repo is expected.
+- A read-only child that runs any shell command but `hc send` stops at a permission prompt. If `screen.txt` shows the lead steering a child past one, the brief lost its read-only tool line.
 - A child that shows `idle` on turn 0 may be a stale status. Read its screen before calling it stuck.
