@@ -6,14 +6,9 @@ id=${1:?usage: launch.sh <run-id> <prompt>}
 prompt=${2:?usage: launch.sh <run-id> <prompt>}
 ev="$repo/.verify/$id"
 mkdir -p "$ev"
-# Default: accept edits in the repo and allow the shell commands a lead needs to drive hc. Anything else stops
-# at a prompt, which shows up as `blocked`. VP_PERMISSION_MODE=bypassPermissions opts in to a fully trusted lead.
-if [ "${VP_PERMISSION_MODE:-}" = bypassPermissions ]; then
-  set -- --permission-mode bypassPermissions
-else
-  set -- --permission-mode acceptEdits --allowedTools "Bash(hc:*)" "Bash(git status:*)" "Bash(git diff:*)" \
-    "Bash(cd:*)" "Bash(cat:*)" "Bash(sed -n:*)" "Bash(ls:*)" "Bash(grep:*)" "Bash(head:*)" "Bash(tail:*)" "Bash(wc:*)" "Bash(echo:*)" "Bash(find:*)" "Bash(node scripts/check-native.mjs:*)" "Write($ev/**)"
-fi
+# The test lead bypasses permissions, by the user's choice, so a run finishes unattended. Its children keep
+# the user's default mode, as in real use. Set VP_PERMISSION_MODE to another mode to run the lead stricter.
+set -- --permission-mode "${VP_PERMISSION_MODE:-bypassPermissions}"
 hc run --bg --name "vp-$id" --cwd "$repo" claude --plugin-dir "$repo" \
   --settings '{"enabledPlugins":{"pstack@cursor-plugins":false}}' \
   "$@" -- "[verify-run $id] $prompt When you are done, write your final answer to $ev/answer.md and stop." > "$ev/launch.json"
