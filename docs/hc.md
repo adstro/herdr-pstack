@@ -19,6 +19,8 @@ hc run --bg --name <name> --cwd <dir> <command> "<brief>"
 - Say in the brief whether the child may start its own subagents. It may not unless you assign that.
 - To spawn several at once, run one `hc run --bg` per child back to back, then wait for the batch.
 
+Each child gets the MCP servers its own program is configured with. A `claude` child has the host's servers when the host is Claude Code. A `grok`, `codex`, or `agy` child has that program's own config, listed by `grok mcp list` or `codex mcp list`. Run a subagent that needs a specific MCP server on a program that has it.
+
 Never run an agent in a one-shot print mode such as `claude -p`. A subagent stays interactive so a person can watch it and you can give it another turn.
 
 ### Agent definitions
@@ -27,11 +29,11 @@ pstack ships agent definitions in `<pstack>/agents/`, such as `poteto-agent` and
 
 ### Read-only subagents
 
-A read-only subagent's brief says "Read-only. Do not edit files." For a Claude child, end the command with `--disallowedTools Edit Write NotebookEdit --`, just before the brief, since the tool list would otherwise swallow the brief. For Codex, put `-s read-only` after `codex`. Check `git status` afterward. A read-only child keeps the host's MCP servers.
+A read-only subagent's brief says "Read-only. Do not edit files." For a Claude child, end the command with `--disallowedTools Edit Write NotebookEdit --`, just before the brief, since the tool list would otherwise swallow the brief. For Codex, put `-s read-only` after `codex`. Check `git status` afterward.
 
 ### Isolated subagents
 
-A subagent that writes code in parallel with others gets its own checkout. Make a worktree with `git worktree add <path> -b <branch> <base>`, then spawn with `--cwd <path>`. When `hc machine ls` lists a machine that holds the repo, `--on <machine> --cwd <repo>` runs the child there instead, and its address is `<machine>/<t>`. Without either, parallel writers share one checkout and overwrite each other.
+A subagent that writes code in parallel with others gets its own checkout. Make a worktree with `git worktree add <path> -b <branch> <base>`, then spawn with `--cwd <path>`. When `hc machine ls` lists a machine that holds the repo, `--on <machine> --cwd <repo>` runs the child there instead, and its address is `<machine>/<t>`. Several children on one machine each still need their own worktree there. Without either, parallel writers share one checkout and overwrite each other.
 
 ### Wait for reports
 
@@ -99,7 +101,7 @@ A value's family is the model it runs, not the program. `<model> <effort>` and a
 
 ## Your own session logs
 
-A live child's screen and history come from `hc read --lines <n> <t>`. The host keeps finished sessions on disk. Claude Code writes `~/.claude/projects/<slug>/<session>.jsonl`, where the slug is the workspace path with each `/` and `.` changed to `-`. Codex writes `~/.codex/sessions/`. Read only the active workspace's sessions, and never glob across every project, which reads unrelated private chats.
+A live child's screen and history come from `hc read --lines <n> <t>`. The host keeps finished sessions on disk. Claude Code writes `~/.claude/projects/<slug>/<session>.jsonl`, where the slug is the workspace path with each `/` and `.` changed to `-`. Codex writes `~/.codex/sessions/YYYY/MM/DD/` for every workspace together, so match a Codex session by the working directory its first entry records. Read only the active workspace's sessions, and never glob across every project, which reads unrelated private chats.
 
 ## Rules and skills folders
 

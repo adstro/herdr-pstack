@@ -32,7 +32,7 @@ Keep every behavior. Change only how it runs. Make the smallest edit that remove
 | A `Task` subagent or call, `subagent_type: generalPurpose`, `run_in_background: true`, "in one message" | A subagent spawned per [Spawn a subagent](docs/hc.md#spawn-a-subagent). Several at once is "spawn all N at once". Drop the field names. |
 | `subagent_type: poteto-agent` or `comment-sicko` | A subagent that acts as that agent, per [Agent definitions](docs/hc.md#agent-definitions). |
 | `readonly: true`, Ask mode | A read-only subagent, per [Read-only subagents](docs/hc.md#read-only-subagents). |
-| `readonly: false`, agent mode, "readonly strips MCP" | Drop it. Every subagent keeps the host's MCP servers. |
+| `readonly: false`, agent mode, "readonly strips MCP" | Drop it. Read-only does not change MCP access. A subagent that needs an MCP server runs on a program that has it, per [Spawn a subagent](docs/hc.md#spawn-a-subagent). |
 | `environment: "cloud"`, cloud agents, `cloud_base_branch` | An isolated subagent in its own worktree or on an `hc` machine, per [Isolated subagents](docs/hc.md#isolated-subagents). |
 | `resume`, steering a running Task | A follow-up with `hc send`, per [Follow-ups, stops, and cleanup](docs/hc.md#follow-ups-stops-and-cleanup). |
 | Task `model`, a slug, "if the Task tool rejects a slug" chains, fast or standard speed | The role's value from the models file, turned into a command per [Role values](docs/hc.md#role-values). Effort changes per [Effort](docs/hc.md#effort). Drop the speed choice. |
