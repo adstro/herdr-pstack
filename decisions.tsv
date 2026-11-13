@@ -20,3 +20,5 @@ ts	phase	decision	why	evidence	result
 2026-11-13T03:54:56Z	panel-fan-out	dropped --rm from the slow-command recipe	finding 7: a fast command was removed before hc wait, which then returned not_found	.verify/panel-1/answer.md finding 7	fixed
 2026-11-13T03:54:56Z	panel-fan-out	copy files to a remote child's machine before the spawn with hc file write	finding 10: hc put needs a live terminal, so it cannot run first	.verify/panel-1/answer.md finding 10	fixed
 2026-11-13T03:55:16Z	panel-fan-out	removed figure-it-out's speed choice and taught the gate to flag it	finding 8: the Cursor speed choice survived and the gate passed it	.verify/panel-1/answer.md finding 8	fixed
+2026-11-13T03:55:41Z	panel-fan-out	linked docs/ and agents/ beside the codex skill links	finding 1: text-joined ../../docs/hc.md resolved to ~/.agents/docs, which did not exist	fake-home test: 61 of 61 skills resolve	fixed
+2026-11-13T03:55:41Z	panel-fan-out	dismissed finding 9, native agent types	hc.md already says to use hc over the host's own subagent tool, and no live turn chose the native path	.verify/panel-1/answer.md finding 9	dismissed

@@ -37,9 +37,11 @@ In Codex, this repository is a skills folder. Link each skill into `~/.agents/sk
 ```bash
 mkdir -p ~/.agents/skills
 ln -s <path to this repo>/skills/* ~/.agents/skills/
+ln -s <path to this repo>/docs ~/.agents/docs
+ln -s <path to this repo>/agents ~/.agents/agents
 ```
 
-The links point into this checkout, so keep it where it is. `git pull` in the checkout updates both hosts.
+The skills link to `../../docs/hc.md` and to `agents/`. A tool that joins paths as text reads those from `~/.agents/`, not from this checkout, so `docs` and `agents` need links there too. The links point into this checkout, so keep it where it is. `git pull` in the checkout updates both hosts.
 
 ## Get started
 

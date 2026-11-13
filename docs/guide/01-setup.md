@@ -20,7 +20,7 @@ claude --plugin-dir <path to this repo> --settings '{"enabledPlugins":{"pstack@c
 
 Claude Code prefixes plugin commands, so each command in this guide takes a `pstack:` prefix there, such as `/pstack:setup-pstack`.
 
-For Codex, this repository is a skills folder. Link each skill into `~/.agents/skills/` and start Codex inside a herdr space. The [README](../../README.md#install) has the commands. [Running pstack on herdr](../hc.md) covers how the skills use `hc`.
+For Codex, this repository is a skills folder. Link each skill into `~/.agents/skills/`, and link the repo's `docs/` and `agents/` folders into `~/.agents/` so the skills' relative links resolve. Then start Codex inside a herdr space. The [README](../../README.md#install) has the commands. [Running pstack on herdr](../hc.md) covers how the skills use `hc`.
 
 ## Pick your models
 
