@@ -95,11 +95,13 @@ A child ends when its parent ends. Two kinds of terminal should not:
 
 ### Waking on a schedule
 
-`/loop` is the host's, such as Claude Code's built-in. On a host without it, start a ticker that wakes you, and kill it when the run ends:
+`/loop` is the host's, such as Claude Code's built-in. On a host without it, write the tick prompt to a file, then start a ticker that wakes you, and kill it when the run ends:
 
 ```sh
-hc run --bg --no-notify --name tick -- sh -c 'while sleep 3600; do hc send '"$HC_TERMINAL_ID"' "tick: <tick prompt>"; done'
+hc run --bg --no-notify --name tick -- sh -c 'while sleep 3600; do hc send "$0" "$(cat "$1")"; done' "$HC_TERMINAL_ID" <prompt file>
 ```
+
+The ticker reads the prompt from the file on each tick, so backticks and `$` in it arrive as written instead of running as shell code.
 
 ### Shared store
 
