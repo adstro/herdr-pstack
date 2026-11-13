@@ -9,5 +9,5 @@ check "plugin manifest valid" "claude plugin validate '$repo/.claude-plugin/plug
 check "native gate passes" "node '$repo/scripts/check-native.mjs'"
 check "no other verify run is live" "! hc ls | grep -q '\"name\":\"vp-'"
 if [ -f "$HOME/.config/herdr-core/pstack-models.md" ]; then echo "ok    models file present"; else echo "note  no models file, skills use their defaults"; fi
-echo "repo  $repo @ $(git -C "$repo" rev-parse --short HEAD)$(git -C "$repo" diff --quiet || echo ' (dirty)')"
+echo "repo  $repo @ $(git -C "$repo" rev-parse --short HEAD)$([ -z "$(git -C "$repo" status --porcelain)" ] || echo ' (dirty)')"
 exit $fail
