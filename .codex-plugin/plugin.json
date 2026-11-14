@@ -1,6 +1,5 @@
 {
   "name": "pstack",
-  "version": "0.15.36",
   "description": "pstack for herdr: every subagent runs as an hc terminal.",
   "author": {
     "name": "Adam Stroud"
