@@ -6,27 +6,36 @@ In this page you install the plugin, pick which models pstack uses, and run your
 
 pstack runs inside a host agent CLI in a herdr terminal, and every subagent it starts is an `hc` terminal. You need herdr with `hc` on your `PATH`.
 
-For Claude Code, load this repository as a plugin. Inside a herdr space, run:
+Install it once in each host you use. After that, every session of that host has pstack, including the ones herdr's agent menu starts.
 
-```text
-claude --plugin-dir <path to this repo>
-```
-
-If Claude Code also has the upstream pstack plugin installed, both load under the same `pstack` name. Turn the upstream one off for these sessions:
+For Claude Code, run:
 
 ```bash
-claude --plugin-dir <path to this repo> --settings '{"enabledPlugins":{"pstack@cursor-plugins":false}}'
+claude plugin marketplace add adstro/herdr-pstack
+claude plugin install pstack@herdr-pstack
+```
+
+If Claude Code also has the upstream pstack plugin installed, both load under the same `pstack` name. Turn the upstream one off:
+
+```bash
+claude plugin disable pstack@cursor-plugins
 ```
 
 Claude Code prefixes plugin commands, so each command in this guide takes a `pstack:` prefix there, such as `/pstack:setup-pstack`.
 
-For Codex, this repository is a skills folder. Link each skill into `~/.agents/skills/`, and link the repo's `docs/` and `agents/` folders into `~/.agents/` so the skills' relative links resolve. Then start Codex inside a herdr space:
+For Codex, run:
 
 ```bash
-mkdir -p ~/.agents/skills
-ln -sfn <path to this repo>/skills/* ~/.agents/skills/
-ln -sfn <path to this repo>/docs ~/.agents/docs
-ln -sfn <path to this repo>/agents ~/.agents/agents
+codex plugin marketplace add adstro/herdr-pstack
+codex plugin add pstack@herdr-pstack
+```
+
+Codex lists the skills with the same `pstack:` prefix. If you linked the skills into `~/.agents/skills/` before, remove those links so each skill loads once.
+
+To work on pstack itself, load a checkout for one Claude Code session instead. It takes the place of the installed copy:
+
+```bash
+claude --plugin-dir <path to this repo>
 ```
 
 [Running pstack on herdr](../hc.md) covers how the skills use `hc`.

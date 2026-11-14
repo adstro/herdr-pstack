@@ -16,32 +16,27 @@ For what pstack is, its philosophy, and the full skill catalog, read the [upstre
 
 ## Install
 
-You need herdr with `hc` on your `PATH`.
+You need herdr with `hc` on your `PATH`. Install pstack once in each host you use. After that, every session of that host has it, including the ones herdr's agent menu starts.
 
-In Claude Code, this repository is a plugin. Inside a herdr space, start Claude Code with it:
-
-```bash
-claude --plugin-dir <path to this repo>
-```
-
-If Claude Code also has the upstream pstack plugin installed, both load under the same `pstack` name. Turn the upstream one off for these sessions:
+In Claude Code:
 
 ```bash
-claude --plugin-dir <path to this repo> --settings '{"enabledPlugins":{"pstack@cursor-plugins":false}}'
+claude plugin marketplace add adstro/herdr-pstack
+claude plugin install pstack@herdr-pstack
 ```
 
-Claude Code prefixes plugin commands, so `/poteto-mode` is `/pstack:poteto-mode`.
+If the upstream pstack plugin is also installed, both load under the same `pstack` name. Turn the upstream one off with `claude plugin disable pstack@cursor-plugins`. Claude Code prefixes plugin commands, so `/poteto-mode` is `/pstack:poteto-mode`.
 
-In Codex, this repository is a skills folder. Link each skill into `~/.agents/skills/`, then start Codex inside a herdr space:
+In Codex:
 
 ```bash
-mkdir -p ~/.agents/skills
-ln -sfn <path to this repo>/skills/* ~/.agents/skills/
-ln -sfn <path to this repo>/docs ~/.agents/docs
-ln -sfn <path to this repo>/agents ~/.agents/agents
+codex plugin marketplace add adstro/herdr-pstack
+codex plugin add pstack@herdr-pstack
 ```
 
-The skills' relative links to `docs/` and `agents/` resolve under `~/.agents/`, so those folders need links too. Keep this checkout where it is. `git pull` in it updates both hosts.
+Codex lists the skills with the same `pstack:` prefix. If you linked the skills into `~/.agents/skills/` before, remove those links.
+
+To update, run `claude plugin update pstack@herdr-pstack` or `codex plugin marketplace upgrade herdr-pstack`. To work on pstack itself, start Claude Code with `claude --plugin-dir <path to this repo>`, which takes the place of the installed copy for that session.
 
 ## Get started
 

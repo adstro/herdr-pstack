@@ -1,0 +1,13 @@
+{
+  "name": "herdr-pstack",
+  "owner": {
+    "name": "Adam Stroud"
+  },
+  "plugins": [
+    {
+      "name": "pstack",
+      "source": "./",
+      "description": "pstack for herdr: every subagent runs as an hc terminal."
+    }
+  ]
+}
