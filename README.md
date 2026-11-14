@@ -21,7 +21,7 @@ You need herdr with `hc` on your `PATH`. Install pstack once in each host you us
 In Claude Code:
 
 ```bash
-claude plugin marketplace add adstro/herdr-pstack
+claude plugin marketplace add adstro/herdr-pstack#release
 claude plugin install pstack@herdr-pstack
 ```
 
@@ -30,13 +30,13 @@ If the upstream pstack plugin is also installed, both load under the same `pstac
 In Codex:
 
 ```bash
-codex plugin marketplace add adstro/herdr-pstack
+codex plugin marketplace add adstro/herdr-pstack --ref release
 codex plugin add pstack@herdr-pstack
 ```
 
 Codex lists the skills with the same `pstack:` prefix. If you linked the skills into `~/.agents/skills/` before, remove those links.
 
-To update, run `claude plugin update pstack@herdr-pstack` or `codex plugin marketplace upgrade herdr-pstack`. To work on pstack itself, start Claude Code with `claude --plugin-dir <path to this repo>`, which takes the place of the installed copy for that session.
+Installs follow the `release` branch, which moves only when a new version of the port is released. To update, run `claude plugin marketplace update herdr-pstack` and then `claude plugin update pstack@herdr-pstack`, or `codex plugin marketplace upgrade herdr-pstack`. To work on pstack itself, start Claude Code with `claude --plugin-dir <path to this repo>`, which takes the place of the installed copy for that session.
 
 ## Get started
 

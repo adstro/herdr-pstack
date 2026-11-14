@@ -11,7 +11,7 @@ Install it once in each host you use. After that, every session of that host has
 For Claude Code, run:
 
 ```bash
-claude plugin marketplace add adstro/herdr-pstack
+claude plugin marketplace add adstro/herdr-pstack#release
 claude plugin install pstack@herdr-pstack
 ```
 
@@ -26,7 +26,7 @@ Claude Code prefixes plugin commands, so each command in this guide takes a `pst
 For Codex, run:
 
 ```bash
-codex plugin marketplace add adstro/herdr-pstack
+codex plugin marketplace add adstro/herdr-pstack --ref release
 codex plugin add pstack@herdr-pstack
 ```
 

@@ -6,6 +6,18 @@ This repository is pstack from [cursor/plugins](https://github.com/cursor/plugin
 
 - `upstream` holds pstack exactly as cursor/plugins ships it, plus the `deslop`, `control-cli`, and `control-ui` skills from `cursor-team-kit`, which pstack calls. `UPSTREAM` records the commit.
 - `main` holds the port.
+- `release` is what installed copies follow. It moves only when you release.
+
+## Release
+
+Users install from the `release` branch, so commits on `main` reach them only when you release. To release, check that the gate passes on `main`, then fast-forward `release` to it:
+
+```sh
+node scripts/check-native.mjs
+git push origin main:release
+```
+
+To dogfood unreleased work in this repo, start Claude Code with `--plugin-dir <path to this repo>`. That copy takes the place of the installed one for the session.
 
 ## Sync a new pstack
 
