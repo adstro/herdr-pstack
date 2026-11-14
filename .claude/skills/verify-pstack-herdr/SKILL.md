@@ -29,7 +29,7 @@ After changing `launch.sh`, `wait.sh`, or `cleanup.sh`, run `.claude/skills/veri
 
 The prompt is what a user would type, such as `/pstack:how how does scripts/check-native.mjs pick which files to scan? Take the simple path.` The script starts the lead with this checkout as the plugin, with the installed upstream `pstack@cursor-plugins` turned off. The lead runs with `--permission-mode bypassPermissions`, which the user chose so runs finish unattended. That lets the test lead run any command on this machine. Set `VP_PERMISSION_MODE` to another mode, such as `default`, to run it stricter, and expect it to stop at prompts. A bypassed lead never shows the prompts a user's lead would hit, so name that gap in the report. Children get the modes [`docs/hc.md`](../../../docs/hc.md#spawn-a-subagent) gives them, as a user's would. Writing children run with `bypassPermissions`. Read-only children run in `default` with their allowlist, so a read-only child stuck at a prompt is a real product bug. It appends a line telling the lead to write its final answer to `.verify/<run-id>/answer.md`.
 
-Then wait for it to finish:
+Then wait for it to finish. A run can outlast the host's foreground command limit, such as Claude Code's 600 seconds, so start `wait.sh` with the host's background-run option and act on its exit notification:
 
 ```sh
 .claude/skills/verify-pstack-herdr/scripts/wait.sh <run-id>
