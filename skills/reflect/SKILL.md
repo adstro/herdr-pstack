@@ -53,7 +53,7 @@ Never edit a skill under `plugins/cache/`. Before approval, show its destination
 Follow each approved row's Routing exactly:
 
 - Trivial existing-skill edit (a one-line bullet, a tightened sentence, a stale fact corrected): the parent does it directly.
-- Substantive existing-skill edit (a new section, a new pattern table, more than ~10 lines): hand to the host's skill-authoring skill, such as `skill-creator` in Claude Code, and run its draft / test / iterate loop under the **authoring-a-skill** playbook.
+- Substantive existing-skill edit (a new section, a new pattern table, more than ~10 lines): hand to the host's skill-authoring skill, such as `skill-creator` in Claude Code, and run its draft / test / iterate loop.
 - `tune description: <skill path>` (the skill exists but didn't trigger when it should have): hand to the skill-authoring skill and run its description-optimization loop.
 - `new skill: <kebab-name>`: hand creation to the skill-authoring skill. Do not invent the shape ad hoc.
 

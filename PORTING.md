@@ -48,7 +48,7 @@ Keep every behavior. Change only how it runs. Make the smallest edit that remove
 | `.cursor/rules/*.mdc`, an always-applied rule | `CLAUDE.md` or `AGENTS.md`, per the same section. |
 | `agent-transcripts/`, `~/.cursor/projects/` | The host's session logs or `hc read`, per [Your own session logs](docs/hc.md#your-own-session-logs). |
 | `cursor-team-kit`'s `deslop`, `control-cli`, `control-ui` | The bundled **deslop**, **control-cli**, and **control-ui** skills at `skills/<name>/`. |
-| Cursor's built-in `create-skill` | The host's skill-authoring skill, such as `skill-creator` in Claude Code, and the **authoring-a-skill** playbook. |
+| Cursor's built-in `create-skill` | The host's skill-authoring skill, such as `skill-creator` in Claude Code. |
 | Cursor's built-in `/loop` | The host's `/loop`. With none, a long-lived `hc` terminal the lead re-wakes with `hc send`. |
 | Cursor Automations, routines, webhooks, `update_state`, `SendToUser` | A named agent terminal woken with `hc send <name> "<payload>"`. herdr-core is local and authenticated by the OS user, so no sender key exists. |
 | A Cursor Project coordinator thread | A long-lived coordinator terminal started with `--outlive-parent`, kept with `hc keep`. |

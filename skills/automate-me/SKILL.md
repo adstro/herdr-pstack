@@ -64,7 +64,7 @@ The **poteto-mode** skill shows the shape. Read it for granularity. Don't copy i
 
 ### 4. Draft the skill
 
-Use the host's skill-authoring skill, such as `skill-creator` in Claude Code, and the **authoring-a-skill** playbook (`../poteto-mode/playbooks/authoring-a-skill.md`) to author the skill. Placement:
+Use the host's skill-authoring skill, such as `skill-creator` in Claude Code to author the skill. Placement:
 
 - Path: preserve an existing mode skill's category. For a new mode, use `<handle>/<handle>-mode/SKILL.md` in the project's skills folder (`.claude/skills/` for Claude Code) when the repo has an established personal category for that handle. Otherwise default to `<handle>-mode/SKILL.md` in the project's skills folder (or in the user skills folder, such as `~/.claude/skills/`, if the user prefers a personal skill).
 - Handle: the user's first name or chosen identifier.
