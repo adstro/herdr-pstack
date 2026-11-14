@@ -59,6 +59,8 @@ It writes these files into `.verify/<run-id>/`:
 Capture evidence before cleanup. Proof standards follow:
 
 - Drive through `/pstack:<skill>` as a user would, never by reading a skill and acting it out yourself.
+- Your own session's `/pstack:` runs prove nothing about a skill edit, since your session loaded its skills when it started. Only a fresh lead proves the edit, and the user must restart their session before they rely on it.
+- Record the lead's permission mode in the report.
 - A spawn proof needs the `hc run` line and the child's report arriving in `screen.txt` as `<hc from=...>`, not only a claim in `answer.md`.
 - A read-only child must leave `git-status.txt` unchanged from the start of the run.
 - Model proof is the `--model`, `-m`, or `--effort` flags in `hc-commands.txt`, checked against `~/.config/herdr-core/pstack-models.md`.
