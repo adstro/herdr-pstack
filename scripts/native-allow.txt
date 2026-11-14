@@ -3,3 +3,4 @@ docs/hc.md	agy --model claude-opus-5-5-high -i
 README.md	Upstream runs on Cursor's subagents
 README.md	in place of Cursor cloud agents
 README.md	lists anything a sync left in Cursor wording
+skills/poteto-mode/playbooks/multi-phase-plan.md	## <Task as a verb phrase>
