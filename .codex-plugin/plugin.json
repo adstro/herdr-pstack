@@ -1,0 +1,17 @@
+{
+  "name": "pstack",
+  "description": "pstack for herdr: every subagent runs as an hc terminal.",
+  "author": {
+    "name": "Adam Stroud"
+  },
+  "homepage": "https://github.com/adstro/herdr-pstack",
+  "repository": "https://github.com/adstro/herdr-pstack",
+  "license": "MIT",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "pstack for herdr",
+    "shortDescription": "Rigorous agent workflows on herdr",
+    "developerName": "Adam Stroud",
+    "category": "Developer Tools"
+  }
+}

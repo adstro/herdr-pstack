@@ -19,7 +19,7 @@ node scripts/check-native.mjs
 
 The import stages exactly the files it copied, so commit without `git add`. The `upstream` branch has no `.gitignore`, and `git add -A` there would commit `.env`, `.verify/`, and `node_modules/`.
 
-Resolve conflicts by keeping the herdr wording and carrying over upstream's behavior change. `README.md` belongs to the port and links to upstream's, so on a conflict there keep the port's copy with `git checkout --ours README.md`. New upstream text arrives in Cursor wording without a conflict, so the gate lists it. Rewrite each hit with the rules below until the gate passes.
+Resolve conflicts by keeping the herdr wording and carrying over upstream's behavior change. `README.md` belongs to the port and links to upstream's, so on a conflict there keep the port's copy with `git checkout --ours README.md`. `.claude-plugin/plugin.json` has no `version`, so Claude Code updates an install on every new commit instead of only on a version change. When upstream changes its version, keep the line deleted. New upstream text arrives in Cursor wording without a conflict, so the gate lists it. Rewrite each hit with the rules below until the gate passes.
 
 ## The gate
 
