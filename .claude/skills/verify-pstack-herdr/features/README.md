@@ -33,3 +33,4 @@ Each feature file starts with an H1 title and one paragraph describing the user-
 - [Panel fan-out](./panel-fan-out.md) covers multi-model panels with Claude, Grok, Gemini, and Codex seats.
 - [Model setup](./model-setup.md) covers `/pstack:setup-pstack` writing the models file.
 - [Gate and upstream sync](./gate-and-sync.md) covers the maintainer scripts that keep the port native and current.
+- [Install and update](./install-and-update.md) covers installing from the marketplace in both hosts and getting only released commits.

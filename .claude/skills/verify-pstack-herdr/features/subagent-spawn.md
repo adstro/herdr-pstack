@@ -10,6 +10,7 @@ A skill that delegates starts each subagent as an `hc` terminal under the lead, 
 - `spawn-plugin` starts each Claude child with `--plugin-dir <repo>`.
 - `spawn-writer` starts a Claude child that edits or runs commands with `--permission-mode bypassPermissions`, and never a read-only one.
 - `spawn-report` receives each child's result as `<hc from="tN name">...</hc>`.
+- `spawn-source` makes each Claude child load the `--plugin-dir` copy and no installed copy of `pstack`.
 - `spawn-cleanup` kills and removes each child once its work is accepted.
 
 ## How to get to it (user POV)
@@ -28,6 +29,7 @@ Preconditions:
 - **Check the spawn.** Run `scripts/evidence.sh spawn-<n>`. `hc-commands.txt` holds an `hc run --bg --name` line whose command is `claude --plugin-dir <repo> ... --model <m> --effort <e> --allowedTools "Bash(hc send:*)" ... --disallowedTools Edit Write NotebookEdit --`, with `<m>` matching the `how explainer` role.
 - **Check the report.** `screen.txt` holds a `<hc from=` line from that child.
 - **Check read-only.** `git-status.txt` matches the tree before the run.
+- **Check the child's copy.** Rerun the child's `claude` command from `hc-commands.txt`, without its tool lists and brief, adding `-p --model haiku --output-format stream-json --verbose --max-turns 1 hi`. Its `init` line lists exactly one `pstack` plugin, at the child's `--plugin-dir`, even with `pstack@herdr-pstack` installed and enabled.
 - **Clean up.** Run `scripts/cleanup.sh spawn-<n>`. It prints `cleaned` and no live children.
 
 ## Gotchas

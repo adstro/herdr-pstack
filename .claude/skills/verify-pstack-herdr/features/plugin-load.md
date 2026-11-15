@@ -21,6 +21,7 @@ Preconditions:
 
 - **Ask for help.** Run `scripts/launch.sh load-<n> "/pstack:poteto-help which skill explains how a piece of code works?"`, then `scripts/wait.sh <run-id>`. `answer.md` names `/how`.
 - **Check the source.** Run `scripts/evidence.sh load-<n>`. `skills-loaded.txt` lists `<repo>/skills/poteto-help` and nothing under `cursor/plugins`.
+- **Check the copy beside an installed one.** With `pstack@herdr-pstack` installed and enabled, run `claude -p --model haiku --plugin-dir <repo> --settings '{"enabledPlugins":{"pstack@cursor-plugins":false}}' --output-format stream-json --verbose --max-turns 1 hi`. Its `init` line lists exactly one `pstack` plugin, at `<repo>`.
 - **Clean up.** Run `scripts/cleanup.sh load-<n>`. It prints `cleaned`.
 
 ## Gotchas

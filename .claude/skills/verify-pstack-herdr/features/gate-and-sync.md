@@ -6,6 +6,7 @@ The maintainer of the port refreshes it from cursor/plugins and relies on the ga
 
 - `gate-clean` passes on `main` with `0 Cursor-only hits in 0 files`.
 - `gate-detect` fails and names the file and line when Cursor plumbing or a broken link is added.
+- `content-drift` leaves every file under `skills/` and `agents/` matching upstream except for plumbing.
 - `sync-idempotent` re-importing the recorded `UPSTREAM` commit leaves the `upstream` branch unchanged.
 
 ## How to get to it (user POV)
@@ -21,6 +22,7 @@ Preconditions:
 
 - **Gate passes.** Run `node scripts/check-native.mjs > .verify/gate-<n>/gate.txt; echo $? >> .verify/gate-<n>/gate.txt`. The file ends with `0 Cursor-only hits in 0 files` and `0`.
 - **Gate detects.** Run `printf 'Use the Task tool.\n' >> skills/how/SKILL.md && node scripts/check-native.mjs --list`, then `git checkout skills/how/SKILL.md`. The listing names `skills/how/SKILL.md` with `Task tool`, and the exit code is `1`.
+- **Content matches upstream.** Run `git diff --name-only upstream main -- skills agents > .verify/gate-<n>/drift-files.txt` and `git diff --word-diff upstream main -- skills agents > .verify/gate-<n>/drift.txt`. Never type the file list yourself, and never trim either output with `head` or `tail`. Every changed word in `drift.txt` is a plumbing term from the `PORTING.md` rewrite table or a `docs/hc.md` link. Any other change is a finding to restore from `upstream`.
 - **Sync is idempotent.** Run it in a throwaway worktree so the import never touches this checkout or `.verify/`: `w=$(mktemp -d)/sync && git worktree add -q "$w" upstream && (cd "$w" && scripts/import-upstream.sh <plugins> $(cat UPSTREAM) >/dev/null && git status --short) > .verify/gate-<n>/sync.txt; git worktree remove --force "$w"`. `sync.txt` is empty, and `git worktree list` no longer lists the worktree.
 
 ## Gotchas

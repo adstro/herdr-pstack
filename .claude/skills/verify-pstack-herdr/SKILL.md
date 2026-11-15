@@ -1,6 +1,6 @@
 ---
 name: verify-pstack-herdr
-description: Prove the pstack herdr port works by driving it the way a user does. Starts a Claude Code lead with this checkout as its plugin in an hc terminal, runs a /pstack skill, and captures the hc subagents it spawns, the skills it loaded, and its answer. Use after changing a skill, docs/hc.md, or the import and gate scripts, before claiming the change works.
+description: Prove the pstack herdr port works by driving it the way a user does. Starts a Claude Code lead with this checkout as its plugin in an hc terminal, runs a /pstack skill, and captures the hc subagents it spawns, the skills it loaded, and its answer. Use after changing or restoring a skill, docs/hc.md, the import and gate scripts, the plugin or marketplace manifests, or the install docs, and before reporting any port change as done.
 ---
 
 # Verify pstack for herdr
@@ -64,6 +64,7 @@ Capture evidence before cleanup. Proof standards follow:
 - A spawn proof needs the `hc run` line and the child's report arriving in `screen.txt` as `<hc from=...>`, not only a claim in `answer.md`.
 - A read-only child must leave `git-status.txt` unchanged from the start of the run.
 - Model proof is the `--model`, `-m`, or `--effort` flags in `hc-commands.txt`, checked against `~/.config/herdr-core/pstack-models.md`.
+- Proof of which plugin copy loaded comes from a record, never from asking a model. For Claude Code, that is the `init` line of `claude -p --output-format stream-json --verbose --max-turns 1`, whose `plugins` entry named `pstack` gives the path. Grep for `"subtype":"init"` before parsing, since hook lines come first. For Codex, it is the files under its plugin cache. A model's answer counts only as a quote of one sentence unique to the file under test.
 
 ## Cleanup
 
