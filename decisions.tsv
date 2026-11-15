@@ -67,3 +67,6 @@ ts	phase	decision	why	evidence	result
 2026-11-14T01:07:00Z	install	repo is a claude code and codex marketplace with no plugin version	user: easier install; a version blocked claude updates	throwaway homes: install from public main with logins off; updates picked up on each commit	VERIFIED
 2026-11-14T01:07:00Z	release	installs follow the release branch; release is git push origin main:release	user: work on main without reaching installed users	a main-only commit left the installed copy on the release commit	VERIFIED
 2026-11-14T01:07:00Z	dogfood	user install from release, upstream pstack disabled, cld-dh loads this checkout	user: port in other projects, checkout in this one	session init lists the cache copy elsewhere and the checkout under cld-dh	VERIFIED
+2026-11-14T01:43:02Z	reflect-2	applied reflect items 1-10 to the verify skill, PORTING.md gate rule, and memory	user: address reflect items	install-fresh run from release in throwaway homes; content-drift run on 42 files showed only plumbing; real plugin config unchanged	VERIFIED
+2026-11-14T01:43:02Z	spawn-source	kept the child --settings override as is	probe before change	child command with pstack@herdr-pstack enabled loads one pstack, the checkout, 61 skills	VERIFIED
+2026-11-14T01:43:02Z	reflect-2-backlog	filed 8 backlog items to BACKLOG.md	reflect step 5	BACKLOG.md diff	VERIFIED
