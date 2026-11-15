@@ -1,6 +1,6 @@
 ---
 name: verify-pstack-herdr
-description: Prove the pstack herdr port works by driving it the way a user does. Starts a Claude Code lead with this checkout as its plugin in an hc terminal, runs a /pstack skill, and captures the hc subagents it spawns, the skills it loaded, and its answer. Use after changing or restoring a skill, docs/hc.md, the import and gate scripts, the plugin or marketplace manifests, or the install docs, and before reporting any port change as done.
+description: Use before saying any change to this port is done or good to go, including an edited or restored skill, docs/hc.md, the import and gate scripts, the plugin or marketplace manifests, or the install docs. The gate and a diff against upstream do not prove a change works, and this skill does. It proves the pstack herdr port works by driving it the way a user does. It starts a Claude Code lead with this checkout as its plugin in an hc terminal, runs a /pstack skill, and captures the hc subagents it spawns, the skills it loaded, and its answer.
 ---
 
 # Verify pstack for herdr
