@@ -35,7 +35,7 @@ Resolve conflicts by keeping the herdr wording and carrying over upstream's beha
 
 ## The gate
 
-`node scripts/check-native.mjs` fails while any Cursor-only term is left in the port's Markdown or shell scripts, or any relative link or heading anchor is broken. `--list` prints each hit. A mention that is not plumbing, such as the upstream author credit, goes in `scripts/native-allow.txt` as `<path>\t<substring>`. Allow a line only when it describes Cursor instead of instructing an agent to use it.
+`node scripts/check-native.mjs` fails while any Cursor-only term is left in the port's Markdown or shell scripts, or any relative link or heading anchor is broken. `--list` prints each hit. A mention that is not plumbing, such as the upstream author credit, goes in `scripts/native-allow.txt` as `<path>\t<substring>`. Allow a line only when it describes Cursor instead of instructing an agent to use it. Allow any hit that is not plumbing, too. Never reword pstack's content to make the gate pass.
 
 ## Rewrite rules
 
